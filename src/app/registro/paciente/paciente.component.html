@@ -1,0 +1,125 @@
+<html>
+<body>
+<div class="container" style="width: 700px; margin-top: 40px;">
+    <main>
+      <div class="py-5 text-center">
+        <h2>Nuevo Paciente</h2>
+        <p class="lead">Ingrese sus datos.</p>
+      </div>
+      <form [formGroup]="pacienteForm" (ngSubmit)="onSubmit()" class="row g-3 needs-validation" novalidate>
+        <div class="col-md-4 mb-3" [ngClass]="{'has-error': !pacienteForm.controls['nombre'].valid && pacienteForm.controls['nombre'].touched}">
+          <label for="validationCustom01" class="form-label">Nombre</label>
+          <input type="text" class="form-control" formControlName="nombre">
+          <div *ngIf="pacienteForm.controls['nombre'].errors?.['required'] && pacienteForm.controls['nombre'].touched" class="error">
+            Nombre es requerido.
+          </div>
+          <div *ngIf="pacienteForm.controls['nombre'].errors?.['noNumbers'] && pacienteForm.controls['nombre'].touched" class="error">
+            Nombre no debe contener números.
+          </div>
+        </div>
+        <div class="col-md-4 mb-3" [ngClass]="{'has-error': !pacienteForm.controls['apellido'].valid && pacienteForm.controls['apellido'].touched}">
+          <label for="validationCustom02" class="form-label">Apellido</label>
+          <input type="text" class="form-control" formControlName="apellido">
+          <div *ngIf="pacienteForm.controls['apellido'].errors?.['required'] && pacienteForm.controls['apellido'].touched" class="error">
+            Apellido es requerido.
+          </div>
+          <div *ngIf="pacienteForm.controls['apellido'].errors?.['noNumbers'] && pacienteForm.controls['apellido'].touched" class="error">
+            Apellido no debe contener números.
+          </div>
+        </div>
+        <div class="col-md-4 mb-3" [ngClass]="{'has-error': !pacienteForm.controls['edad'].valid && pacienteForm.controls['edad'].touched}">
+          <label for="validationCustom02" class="form-label">Edad</label>
+          <input type="number" class="form-control" formControlName="edad">
+          <div *ngIf="pacienteForm.controls['edad'].errors?.['required'] && pacienteForm.controls['edad'].touched" class="error">
+            Edad es requerida.
+          </div>
+          <div *ngIf="pacienteForm.controls['edad'].errors?.['min'] && pacienteForm.controls['edad'].touched" class="error">
+            Edad mínima es 3.
+          </div>
+          <div *ngIf="pacienteForm.controls['edad'].errors?.['max'] && pacienteForm.controls['edad'].touched" class="error">
+            Edad máxima es 99.
+          </div>
+        </div>
+        <div class="col-md-4 mb-3" [ngClass]="{'has-error': !pacienteForm.controls['dni'].valid && pacienteForm.controls['dni'].touched}">
+          <label for="validationCustomDNI" class="form-label">DNI</label>
+          <div class="input-group has-validation">
+            <span class="input-group-text" id="inputGroupPrepend">DNI</span>
+            <input type="number" class="form-control" formControlName="dni" aria-describedby="inputGroupPrepend">
+            <div *ngIf="pacienteForm.controls['dni'].errors?.['required'] && pacienteForm.controls['dni'].touched" class="error">
+              DNI es requerido.
+            </div>
+            <div *ngIf="(pacienteForm.controls['dni'].errors?.['min'] || pacienteForm.controls['dni'].errors?.['max']) && pacienteForm.controls['dni'].touched" class="error">
+              DNI debe estar entre 100 y 100000000.
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-3" [ngClass]="{'has-error': !pacienteForm.controls['obraSocial'].valid && pacienteForm.controls['obraSocial'].touched}">
+          <label for="validationCustom03" class="form-label">Obra social</label>
+          <input type="text" class="form-control" formControlName="obraSocial">
+          <div *ngIf="pacienteForm.controls['obraSocial'].errors?.['required'] && pacienteForm.controls['obraSocial'].touched" class="error">
+            Obra social es requerida.
+          </div>
+        </div>
+        <div class="col-md-6 mb-3" [ngClass]="{'has-error': !pacienteForm.controls['email'].valid && pacienteForm.controls['email'].touched}">
+          <label for="validationMail" class="form-label">Mail</label>
+          <input type="text" class="form-control" formControlName="email">
+          <div *ngIf="pacienteForm.controls['email'].errors?.['required'] && pacienteForm.controls['email'].touched" class="error">
+            Mail es requerido.
+          </div>
+          <div *ngIf="pacienteForm.controls['email'].errors?.['invalidEmail'] && pacienteForm.controls['email'].touched" class="error">
+            Mail debe tener un @ y terminar en .com.
+          </div>
+        </div>
+        <div class="col-md-3 mb-3" [ngClass]="{'has-error': !pacienteForm.controls['contraseña'].valid && pacienteForm.controls['contraseña'].touched}">
+          <label for="validationCustomContraseña" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" formControlName="contraseña">
+          <div *ngIf="pacienteForm.controls['contraseña'].errors?.['required'] && pacienteForm.controls['contraseña'].touched" class="error">
+            Contraseña es requerida.
+          </div>
+          <div *ngIf="pacienteForm.controls['contraseña'].errors?.['minlength'] && pacienteForm.controls['contraseña'].touched" class="error">
+            Contraseña debe tener al menos 6 caracteres.
+          </div>
+        </div>
+        <div class="col-md-3 mb-3" [ngClass]="{'has-error': !pacienteForm.controls['confirmarContraseña'].valid && pacienteForm.controls['confirmarContraseña'].touched}">
+          <label for="validationCustomContraseña" class="form-label">Repetir contraseña</label>
+          <input type="password" class="form-control" formControlName="confirmarContraseña">
+          <div *ngIf="pacienteForm.controls['confirmarContraseña'].errors?.['required'] && pacienteForm.controls['confirmarContraseña'].touched" class="error">
+            Repetir contraseña es requerido.
+          </div>
+          <div *ngIf="pacienteForm.errors?.['mismatch'] && pacienteForm.controls['confirmarContraseña'].touched" class="error">
+            Contraseñas no coinciden.
+          </div>
+        </div>
+        <div class="col-md-6 mb-3" [ngClass]="{'has-error': !pacienteForm.controls['fotoPerfil'].valid && pacienteForm.controls['fotoPerfil'].touched}">
+            <label for="validationCustomFotoPerfil" class="form-label">Foto de Perfil</label>
+            <input type="file" class="form-control" (change)="onFileChange($event, 'perfil')">
+            <div *ngIf="pacienteForm.controls['fotoPerfil'].errors?.['required'] && pacienteForm.controls['fotoPerfil'].touched" class="error">
+                Foto de perfil es requerida.
+            </div>
+        </div>
+        <div class="col-md-6 mb-3" [ngClass]="{'has-error': !pacienteForm.controls['fotoDNI'].valid && pacienteForm.controls['fotoDNI'].touched}">
+            <label for="validationCustomFotoDNI" class="form-label">Foto del DNI</label>
+            <input type="file" class="form-control" (change)="onFileChange($event, 'dni')">
+            <div *ngIf="pacienteForm.controls['fotoDNI'].errors?.['required'] && pacienteForm.controls['fotoDNI'].touched" class="error">
+                Foto del DNI es requerida.
+            </div>
+        </div>        
+        <div class="col-12 mb-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="terminosCheckbox" formControlName="terminos">
+            <label class="form-check-label" for="terminosCheckbox">
+              Aceptar términos y condiciones.
+            </label>
+            <div *ngIf="pacienteForm.controls['terminos'].errors?.['required'] && pacienteForm.controls['terminos'].touched" class="error">
+              Usted debe aceptar los términos y condiciones.
+            </div>
+          </div>
+        </div>
+        <div class="col-12 mb-3">
+          <button class="btn btn-primary" type="submit">Crear paciente</button>
+        </div>
+      </form>
+    </main>
+  </div>
+</body>
+</html>
