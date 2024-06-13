@@ -48,22 +48,6 @@ export class PacienteComponent implements OnInit{
     }
 }
 
-  noNumbersValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const valid = /^[a-zA-Z]+$/.test(control.value);
-    return valid ? null : { 'noNumbers': true };
-  }
-
-  emailValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(control.value) && control.value.endsWith('.com');
-    return valid ? null : { 'invalidEmail': true };
-  }
-
-  passwordMatchValidator(group: FormGroup): { [key: string]: boolean } | null {
-    const password = group.get('contraseña')?.value || '';
-    const confirmPassword = group.get('confirmarContraseña')?.value || '';
-    return password === confirmPassword ? null : { 'mismatch': true };
-  }
-
   async onSubmit(): Promise<void> {
     if (this.pacienteForm.valid) {
       const dni = this.pacienteForm.value.dni;
@@ -87,6 +71,22 @@ export class PacienteComponent implements OnInit{
   {
     const col = collection(this.fire, 'pacientes');
     addDoc(col, {nombre: paciente.nombre, apellido: paciente.apellido, dni: paciente.dni, obraSocial: paciente.obraSocial, 
-      mail: paciente.email, contraseña: paciente.contraseña});
+      mail: paciente.email, contraseña: paciente.contraseña, validado: false});
+  }
+
+  noNumbersValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const valid = /^[a-zA-Z]+$/.test(control.value);
+    return valid ? null : { 'noNumbers': true };
+  }
+
+  emailValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(control.value) && control.value.endsWith('.com');
+    return valid ? null : { 'invalidEmail': true };
+  }
+
+  passwordMatchValidator(group: FormGroup): { [key: string]: boolean } | null {
+    const password = group.get('contraseña')?.value || '';
+    const confirmPassword = group.get('confirmarContraseña')?.value || '';
+    return password === confirmPassword ? null : { 'mismatch': true };
   }
 }

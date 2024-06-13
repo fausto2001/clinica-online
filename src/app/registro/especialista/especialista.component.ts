@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Firestore, addDoc, collection } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, collectionData } from '@angular/fire/firestore';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { PhotoService } from 'src/app/services/photo.service';
+
+interface Especialidad
+{
+  especialidad:string
+}
 
 @Component({
   selector: 'app-especialista',
@@ -11,8 +17,21 @@ import { PhotoService } from 'src/app/services/photo.service';
 export class EspecialistaComponent implements OnInit{
 
   especialistaForm!: FormGroup;
+  especialidades: string[] = [];
+  especialidadActual: string | undefined = "test";
+  nuevaEspecialidad: string | undefined;
+  especialidadAgregada: boolean = false;
 
-  constructor(private fb: FormBuilder, private service:PhotoService, private fire:Firestore) {}
+  constructor(private fb: FormBuilder, private service:PhotoService, private fire:Firestore) {
+    this.getEspecialidades().subscribe(especialidadesBD =>{
+      especialidadesBD.forEach(especialidad =>
+        {
+          this.especialidades.push(especialidad.especialidad);
+        }
+      )
+    })
+    
+  }
 
   ngOnInit()
   {
@@ -22,6 +41,7 @@ export class EspecialistaComponent implements OnInit{
       edad: ['', [Validators.required, Validators.min(3), Validators.max(99)]],
       dni: ['', [Validators.required, Validators.min(100), Validators.max(100000000)]],
       especialidad: ['', Validators.required],
+      nuevaEspecialidad: [''],
       email: ['', [Validators.required, Validators.email, this.emailValidator]],
       contraseña: ['', [Validators.required, Validators.minLength(6)]],
       confirmarContraseña: ['', [Validators.required, Validators.minLength(6)]],
@@ -59,8 +79,16 @@ export class EspecialistaComponent implements OnInit{
   subirEspecialistaDB(especialista:any)
   {
     const col = collection(this.fire, 'especialistas');
-    addDoc(col, {nombre: especialista.nombre, apellido: especialista.apellido, dni: especialista.dni, especialidad: especialista.especialidad, 
-      mail: especialista.email, contraseña: especialista.contraseña});
+    if(!this.especialidadAgregada)
+    {
+      addDoc(col, {nombre: especialista.nombre, apellido: especialista.apellido, dni: especialista.dni, especialidad: especialista.especialidad, 
+      mail: especialista.email, contraseña: especialista.contraseña, validado: false});
+    }
+    else
+    {
+      addDoc(col, {nombre: especialista.nombre, apellido: especialista.apellido, dni: especialista.dni, especialidad: especialista.nuevaEspecialidad, 
+      mail: especialista.email, contraseña: especialista.contraseña, validado: false});
+    }
   }
 
   noNumbersValidator(control: AbstractControl): { [key: string]: boolean } | null {
@@ -79,4 +107,16 @@ export class EspecialistaComponent implements OnInit{
     return password === confirmPassword ? null : { 'mismatch': true };
   }
 
+  getEspecialidades(): Observable<Especialidad[]>
+  {
+    const usrRef = collection(this.fire, 'especialidades');
+    return collectionData(usrRef, {idField: 'idDoc'}) as Observable<Especialidad[]>;
+  }
+
+  agregarEspecialidad(especialidad:any)
+  {
+    const col = collection(this.fire, 'especialidades');
+    addDoc(col, {especialidad:especialidad});
+    this.especialidadAgregada = true;
+  }
 }

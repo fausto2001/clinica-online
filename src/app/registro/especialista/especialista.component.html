@@ -54,12 +54,29 @@
           </div>
         </div>
         <div class="col-md-6 mb-3" [ngClass]="{'has-error': !especialistaForm.controls['especialidad'].valid && especialistaForm.controls['especialidad'].touched}">
-          <label for="validationCustom03" class="form-label">Especialidad</label>
-          <input type="text" class="form-control" formControlName="especialidad">
-          <div *ngIf="especialistaForm.controls['especialidad'].errors?.['required'] && especialistaForm.controls['especialidad'].touched" class="error">
-            Especialidad.
+          <div *ngIf="!especialidadAgregada">
+            <div style="padding-top:32px;">
+              <select class="form-select" aria-label="Default select example" formControlName="especialidad">
+                <option *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad}}</option>
+              </select>
+            </div>
+            <div *ngIf="especialistaForm.controls['especialidad'].value === 'Agregar nueva...'"><br>
+              <label>Nueva especialidad</label>
+              <input type="text" class="form-control" formControlName="nuevaEspecialidad"> <br>
+              <button type="button" class="btn btn-primary" 
+              (click)="agregarEspecialidad(especialistaForm.controls['nuevaEspecialidad'].value)">Agregar</button>
+            </div>
+            <div *ngIf="especialistaForm.controls['especialidad'].errors?.['required'] && especialistaForm.controls['especialidad'].touched" class="error">
+              Especialidad es requerida.
+            </div>
+            <div *ngIf="especialistaForm.controls['especialidad'].value == 'Agregar nueva...' && especialistaForm.controls['especialidad'].touched" class="error">
+              Especialidad es requerida.
+            </div>
           </div>
-        </div>
+          <div *ngIf="especialidadAgregada" style="padding-top:32px">
+            <h4>Especialidad: {{especialistaForm.controls['nuevaEspecialidad'].value}}</h4>
+          </div>
+        </div>        
         <div class="col-md-6 mb-3" [ngClass]="{'has-error': !especialistaForm.controls['email'].valid && especialistaForm.controls['email'].touched}">
           <label for="validationMail" class="form-label">Mail</label>
           <input type="text" class="form-control" formControlName="email">
@@ -115,4 +132,5 @@
     </main>
   </div>
 </body>
+<button class="floating-button" [routerLink]="['']"></button>
 </html>
