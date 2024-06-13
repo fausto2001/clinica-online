@@ -69,7 +69,7 @@ export class PacienteComponent implements OnInit{
       const dni = this.pacienteForm.value.dni;
       const fotoDNI = this.pacienteForm.value.fotoDNI;
       const fotoPerfil = this.pacienteForm.value.fotoPerfil;
-      if(fotoDNI instanceof File)
+      if(fotoDNI instanceof File && fotoPerfil instanceof File)
       {
         await this.service.subirFoto(fotoDNI, dni, "dni");
         await this.service.subirFoto(fotoPerfil, dni, "perfil");

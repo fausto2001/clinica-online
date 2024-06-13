@@ -1,1 +1,36 @@
-<p>login works!</p>
+<body>
+    <div class="container" style="width: 700px">
+        <div class="py-5 text-center">
+            <h2>Login</h2>
+            <p class="lead">Ingrese sus datos.</p>
+          </div>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="row g-3 needs-validation" novalidate>
+            <div class="col-md-4 mb-3" [ngClass]="{'has-error': !loginForm.controls['dni'].valid && loginForm.controls['dni'].touched}">
+                <label for="validationCustomDNI" class="form-label">DNI</label>
+                <div class="input-group has-validation">
+                  <span class="input-group-text" id="inputGroupPrepend">DNI</span>
+                  <input type="number" class="form-control" formControlName="dni" aria-describedby="inputGroupPrepend">
+                  <div *ngIf="loginForm.controls['dni'].errors?.['required'] && loginForm.controls['dni'].touched" class="error">
+                    DNI es requerido.
+                  </div>
+                  <div *ngIf="(loginForm.controls['dni'].errors?.['min'] || loginForm.controls['dni'].errors?.['max']) && loginForm.controls['dni'].touched" class="error">
+                    DNI debe estar entre 100 y 100000000.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-3" [ngClass]="{'has-error': !loginForm.controls['contraseña'].valid && loginForm.controls['contraseña'].touched}">
+                <label for="validationCustomContraseña" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" formControlName="contraseña">
+                <div *ngIf="loginForm.controls['contraseña'].errors?.['required'] && loginForm.controls['contraseña'].touched" class="error">
+                  Contraseña es requerida.
+                </div>
+              </div>
+              <div class="col-12 mb-3">
+                <button class="btn btn-primary" type="submit">Ingresar</button>
+              </div>
+        </form>
+        <button type="button" class="btn btn-primary" (click)="login('123', '123456')">acceso rápido paciente</button>
+        <button class="btn btn-primary" (click)="login('456', '123456')">acceso rápido especialista</button>
+        <button class="btn btn-primary" (click)="login('0', 'admin')">acceso rápido admin</button>
+    </div>
+</body>

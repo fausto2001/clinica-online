@@ -1,0 +1,44 @@
+.error {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+  .error {
+    background-color: #f8d7da;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+  }
+
+  .container {
+    width: 700px;
+    margin-top: 40px;
+    background-color: rgba(255, 255, 255, 0.709); /* White color with 90% opacity */
+    padding: 20px; /* Add padding to make sure content isn't right at the edge */
+}
+
+body {
+    background: url('../../../assets/clinic.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:column;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 700px;
+    flex: 1;
+    margin: 6.8% auto;
+}
+
+  

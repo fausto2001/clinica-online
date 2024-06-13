@@ -1,1 +1,118 @@
-<p>especialista works!</p>
+<html>
+<body>
+<div class="container" style="width: 700px; margin-top: 40px;">
+    <main>
+      <div class="py-5 text-center">
+        <h2>Nuevo especialista</h2>
+        <p class="lead">Ingrese sus datos.</p>
+      </div>
+      <form [formGroup]="especialistaForm" (ngSubmit)="onSubmit()" class="row g-3 needs-validation" novalidate>
+        <div class="col-md-4 mb-3" [ngClass]="{'has-error': !especialistaForm.controls['nombre'].valid && especialistaForm.controls['nombre'].touched}">
+          <label for="validationCustom01" class="form-label">Nombre</label>
+          <input type="text" class="form-control" formControlName="nombre">
+          <div *ngIf="especialistaForm.controls['nombre'].errors?.['required'] && especialistaForm.controls['nombre'].touched" class="error">
+            Nombre es requerido.
+          </div>
+          <div *ngIf="especialistaForm.controls['nombre'].errors?.['noNumbers'] && especialistaForm.controls['nombre'].touched" class="error">
+            Nombre no debe contener números.
+          </div>
+        </div>
+        <div class="col-md-4 mb-3" [ngClass]="{'has-error': !especialistaForm.controls['apellido'].valid && especialistaForm.controls['apellido'].touched}">
+          <label for="validationCustom02" class="form-label">Apellido</label>
+          <input type="text" class="form-control" formControlName="apellido">
+          <div *ngIf="especialistaForm.controls['apellido'].errors?.['required'] && especialistaForm.controls['apellido'].touched" class="error">
+            Apellido es requerido.
+          </div>
+          <div *ngIf="especialistaForm.controls['apellido'].errors?.['noNumbers'] && especialistaForm.controls['apellido'].touched" class="error">
+            Apellido no debe contener números.
+          </div>
+        </div>
+        <div class="col-md-4 mb-3" [ngClass]="{'has-error': !especialistaForm.controls['edad'].valid && especialistaForm.controls['edad'].touched}">
+          <label for="validationCustom02" class="form-label">Edad</label>
+          <input type="number" class="form-control" formControlName="edad">
+          <div *ngIf="especialistaForm.controls['edad'].errors?.['required'] && especialistaForm.controls['edad'].touched" class="error">
+            Edad es requerida.
+          </div>
+          <div *ngIf="especialistaForm.controls['edad'].errors?.['min'] && especialistaForm.controls['edad'].touched" class="error">
+            Edad mínima es 3.
+          </div>
+          <div *ngIf="especialistaForm.controls['edad'].errors?.['max'] && especialistaForm.controls['edad'].touched" class="error">
+            Edad máxima es 99.
+          </div>
+        </div>
+        <div class="col-md-4 mb-3" [ngClass]="{'has-error': !especialistaForm.controls['dni'].valid && especialistaForm.controls['dni'].touched}">
+          <label for="validationCustomDNI" class="form-label">DNI</label>
+          <div class="input-group has-validation">
+            <span class="input-group-text" id="inputGroupPrepend">DNI</span>
+            <input type="number" class="form-control" formControlName="dni" aria-describedby="inputGroupPrepend">
+            <div *ngIf="especialistaForm.controls['dni'].errors?.['required'] && especialistaForm.controls['dni'].touched" class="error">
+              DNI es requerido.
+            </div>
+            <div *ngIf="(especialistaForm.controls['dni'].errors?.['min'] || especialistaForm.controls['dni'].errors?.['max']) && especialistaForm.controls['dni'].touched" class="error">
+              DNI debe estar entre 100 y 100000000.
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-3" [ngClass]="{'has-error': !especialistaForm.controls['especialidad'].valid && especialistaForm.controls['especialidad'].touched}">
+          <label for="validationCustom03" class="form-label">Especialidad</label>
+          <input type="text" class="form-control" formControlName="especialidad">
+          <div *ngIf="especialistaForm.controls['especialidad'].errors?.['required'] && especialistaForm.controls['especialidad'].touched" class="error">
+            Especialidad.
+          </div>
+        </div>
+        <div class="col-md-6 mb-3" [ngClass]="{'has-error': !especialistaForm.controls['email'].valid && especialistaForm.controls['email'].touched}">
+          <label for="validationMail" class="form-label">Mail</label>
+          <input type="text" class="form-control" formControlName="email">
+          <div *ngIf="especialistaForm.controls['email'].errors?.['required'] && especialistaForm.controls['email'].touched" class="error">
+            Mail es requerido.
+          </div>
+          <div *ngIf="especialistaForm.controls['email'].errors?.['invalidEmail'] && especialistaForm.controls['email'].touched" class="error">
+            Mail debe tener un @ y terminar en .com.
+          </div>
+        </div>
+        <div class="col-md-3 mb-3" [ngClass]="{'has-error': !especialistaForm.controls['contraseña'].valid && especialistaForm.controls['contraseña'].touched}">
+          <label for="validationCustomContraseña" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" formControlName="contraseña">
+          <div *ngIf="especialistaForm.controls['contraseña'].errors?.['required'] && especialistaForm.controls['contraseña'].touched" class="error">
+            Contraseña es requerida.
+          </div>
+          <div *ngIf="especialistaForm.controls['contraseña'].errors?.['minlength'] && especialistaForm.controls['contraseña'].touched" class="error">
+            Contraseña debe tener al menos 6 caracteres.
+          </div>
+        </div>
+        <div class="col-md-3 mb-3" [ngClass]="{'has-error': !especialistaForm.controls['confirmarContraseña'].valid && especialistaForm.controls['confirmarContraseña'].touched}">
+          <label for="validationCustomContraseña" class="form-label">Repetir contraseña</label>
+          <input type="password" class="form-control" formControlName="confirmarContraseña">
+          <div *ngIf="especialistaForm.controls['confirmarContraseña'].errors?.['required'] && especialistaForm.controls['confirmarContraseña'].touched" class="error">
+            Repetir contraseña es requerido.
+          </div>
+          <div *ngIf="especialistaForm.errors?.['mismatch'] && especialistaForm.controls['confirmarContraseña'].touched" class="error">
+            Contraseñas no coinciden.
+          </div>
+        </div>
+        <div class="col-md-6 mb-3" [ngClass]="{'has-error': !especialistaForm.controls['fotoPerfil'].valid && especialistaForm.controls['fotoPerfil'].touched}">
+            <label for="validationCustomFotoPerfil" class="form-label">Foto de perfil</label>
+            <input type="file" class="form-control" (change)="onFileChange($event, 'perfil')">
+            <div *ngIf="especialistaForm.controls['fotoPerfil'].errors?.['required'] && especialistaForm.controls['fotoPerfil'].touched" class="error">
+                Foto del DNI es requerida.
+            </div>
+        </div>        
+        <div class="col-12 mb-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="terminosCheckbox" formControlName="terminos">
+            <label class="form-check-label" for="terminosCheckbox">
+              Aceptar términos y condiciones.
+            </label>
+            <div *ngIf="especialistaForm.controls['terminos'].errors?.['required'] && especialistaForm.controls['terminos'].touched" class="error">
+              Usted debe aceptar los términos y condiciones.
+            </div>
+          </div>
+        </div>
+        <div class="col-12 mb-3">
+          <button class="btn btn-primary" type="submit">Crear especialista</button>
+        </div>
+      </form>
+    </main>
+  </div>
+</body>
+</html>
