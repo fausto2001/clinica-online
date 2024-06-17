@@ -62,3 +62,26 @@ body{
     0% { opacity: 0; transform: translateY(20px); }
     100% { opacity: 1; transform: translateY(0); }
 }
+
+.floating-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 140px; /* Increased button width */
+    height: 140px; /* Increased button height */
+    border-radius: 50%;
+    background-color: #ff9999;
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease-in-out;
+    background-image: url('../../assets/casa.png');
+    background-size: 60%;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }

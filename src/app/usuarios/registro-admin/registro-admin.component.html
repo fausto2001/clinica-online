@@ -1,0 +1,125 @@
+<html>
+<body>
+  <div *ngIf="!adminAgregado">
+    <div class="container" style="width: 700px; margin-top: 0px;">
+      <main>
+        <div class="py-5 text-center">
+          <h2>Nuevo Administrador</h2>
+          <p class="lead">Ingrese sus datos.</p>
+        </div>
+        <form [formGroup]="adminForm" (ngSubmit)="onSubmit()" class="row g-3 needs-validation" novalidate>
+          <div class="col-md-4 mb-3" [ngClass]="{'has-error': !adminForm.controls['nombre'].valid && adminForm.controls['nombre'].touched}">
+            <label for="validationCustom01" class="form-label">Nombre</label>
+            <input type="text" class="form-control" formControlName="nombre">
+            <div *ngIf="adminForm.controls['nombre'].errors?.['required'] && adminForm.controls['nombre'].touched" class="error">
+              Nombre es requerido.
+            </div>
+            <div *ngIf="adminForm.controls['nombre'].errors?.['noNumbers'] && adminForm.controls['nombre'].touched" class="error">
+              Nombre no debe contener números.
+            </div>
+          </div>
+          <div class="col-md-4 mb-3" [ngClass]="{'has-error': !adminForm.controls['apellido'].valid && adminForm.controls['apellido'].touched}">
+            <label for="validationCustom02" class="form-label">Apellido</label>
+            <input type="text" class="form-control" formControlName="apellido">
+            <div *ngIf="adminForm.controls['apellido'].errors?.['required'] && adminForm.controls['apellido'].touched" class="error">
+              Apellido es requerido.
+            </div>
+            <div *ngIf="adminForm.controls['apellido'].errors?.['noNumbers'] && adminForm.controls['apellido'].touched" class="error">
+              Apellido no debe contener números.
+            </div>
+          </div>
+          <div class="col-md-4 mb-3" [ngClass]="{'has-error': !adminForm.controls['edad'].valid && adminForm.controls['edad'].touched}">
+            <label for="validationCustom02" class="form-label">Edad</label>
+            <input type="number" class="form-control" formControlName="edad">
+            <div *ngIf="adminForm.controls['edad'].errors?.['required'] && adminForm.controls['edad'].touched" class="error">
+              Edad es requerida.
+            </div>
+            <div *ngIf="adminForm.controls['edad'].errors?.['min'] && adminForm.controls['edad'].touched" class="error">
+              Edad mínima es 3.
+            </div>
+            <div *ngIf="adminForm.controls['edad'].errors?.['max'] && adminForm.controls['edad'].touched" class="error">
+              Edad máxima es 99.
+            </div>
+          </div>
+          <div class="col-md-4 mb-3" [ngClass]="{'has-error': !adminForm.controls['dni'].valid && adminForm.controls['dni'].touched}">
+            <label for="validationCustomDNI" class="form-label">DNI</label>
+            <div class="input-group has-validation">
+              <span class="input-group-text" id="inputGroupPrepend">DNI</span>
+              <input type="number" class="form-control" formControlName="dni" aria-describedby="inputGroupPrepend">
+              <div *ngIf="adminForm.controls['dni'].errors?.['required'] && adminForm.controls['dni'].touched" class="error">
+                DNI es requerido.
+              </div>
+              <div *ngIf="(adminForm.controls['dni'].errors?.['min'] || adminForm.controls['dni'].errors?.['max']) && adminForm.controls['dni'].touched" class="error">
+                DNI debe estar entre 100 y 100000000.
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3" [ngClass]="{'has-error': !adminForm.controls['email'].valid && adminForm.controls['email'].touched}">
+            <label for="validationMail" class="form-label">Mail</label>
+            <input type="text" class="form-control" formControlName="email">
+            <div *ngIf="adminForm.controls['email'].errors?.['required'] && adminForm.controls['email'].touched" class="error">
+              Mail es requerido.
+            </div>
+            <div *ngIf="adminForm.controls['email'].errors?.['invalidEmail'] && adminForm.controls['email'].touched" class="error">
+              Mail debe tener un @ y terminar en .com.
+            </div>
+          </div>
+          <div class="col-md-3 mb-3" [ngClass]="{'has-error': !adminForm.controls['contraseña'].valid && adminForm.controls['contraseña'].touched}">
+            <label for="validationCustomContraseña" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" formControlName="contraseña">
+            <div *ngIf="adminForm.controls['contraseña'].errors?.['required'] && adminForm.controls['contraseña'].touched" class="error">
+              Contraseña es requerida.
+            </div>
+            <div *ngIf="adminForm.controls['contraseña'].errors?.['minlength'] && adminForm.controls['contraseña'].touched" class="error">
+              Contraseña debe tener al menos 6 caracteres.
+            </div>
+          </div>
+          <div class="col-md-3 mb-3" [ngClass]="{'has-error': !adminForm.controls['confirmarContraseña'].valid && adminForm.controls['confirmarContraseña'].touched}">
+            <label for="validationCustomContraseña" class="form-label">Repetir contraseña</label>
+            <input type="password" class="form-control" formControlName="confirmarContraseña">
+            <div *ngIf="adminForm.controls['confirmarContraseña'].errors?.['required'] && adminForm.controls['confirmarContraseña'].touched" class="error">
+              Repetir contraseña es requerido.
+            </div>
+            <div *ngIf="adminForm.errors?.['mismatch'] && adminForm.controls['confirmarContraseña'].touched" class="error">
+              Contraseñas no coinciden.
+            </div>
+          </div>
+          <div class="col-md-6 mb-3" [ngClass]="{'has-error': !adminForm.controls['fotoPerfil'].valid && adminForm.controls['fotoPerfil'].touched}">
+              <label for="validationCustomFotoPerfil" class="form-label">Foto de Perfil</label>
+              <input type="file" class="form-control" (change)="onFileChange($event, 'perfil')">
+              <div *ngIf="adminForm.controls['fotoPerfil'].errors?.['required'] && adminForm.controls['fotoPerfil'].touched" class="error">
+                  Foto de perfil es requerida.
+              </div>
+          </div>      
+          <div class="col-12 mb-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="terminosCheckbox" formControlName="terminos">
+              <label class="form-check-label" for="terminosCheckbox">
+                Aceptar términos y condiciones.
+              </label>
+              <div *ngIf="adminForm.controls['terminos'].errors?.['required'] && adminForm.controls['terminos'].touched" class="error">
+                Usted debe aceptar los términos y condiciones.
+              </div>
+            </div>
+          </div>
+          <div class="col-12 mb-3">
+            <button class="btn btn-primary" type="submit">Crear paciente</button>
+          </div>
+        </form>
+      </main>
+    </div>
+    <button class="floating-button-2" [routerLink]="['/registro/especialista']"></button>
+  </div>
+  <button class="floating-button" [routerLink]="['']"></button>
+  <div *ngIf="adminAgregado">
+    <div class="container" style="width: 700px; margin-top: 0px;">
+      <div class="py-5 text-center">
+        <h2>Nuevo Administrador</h2>
+        <p class="lead">Usted ha sido agregado a nuestro registro! <br> Muchas gracias!
+        </p>
+        <button class="btn-success" [routerLink]="['/usuarios']">Volver a sección usuarios</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

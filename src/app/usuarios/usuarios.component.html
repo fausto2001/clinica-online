@@ -6,9 +6,10 @@
     <title>Especialistas y Pacientes</title>
 </head>
 <body>
+    <button class="btn-primary" style="margin-left:1%; margin-top:15%; position:absolute
+    " [routerLink]="['registro-admin']">Crear nueva cuenta de administrador</button>
     <div class="container mt-5">
         <div class="animated-title">Sección Usuarios</div>
-
         <div class="card">
             <div class="card-header">
                 Especialistas
@@ -86,6 +87,42 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="card">
+            <div class="card-header">
+                Administradores
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Perfil</th>
+                                <th scope="col">DNI</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido</th>
+                                <th scope="col">Mail</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let admin of admins">
+                                <td><img src="{{admin.foto}}" class="table-img" alt="Perfil"></td>
+                                <td>
+                                    {{admin.dni}}
+                                </td>
+                                <td>{{admin.nombre}}</td>
+                                <td>{{admin.apellido}}</td>
+                                <td>{{admin.mail}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </body>
+<button class="floating-button" [routerLink]="['']"></button>
 </html>

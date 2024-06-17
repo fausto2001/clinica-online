@@ -32,6 +32,16 @@ export interface Paciente
   idDoc:string
 }
 
+export interface Admin
+{
+  dni:string,
+  nombre:string,
+  apellido:string,
+  mail:string,
+  foto:string,
+  idDoc:string
+}
+
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
@@ -41,8 +51,10 @@ export class UsuariosComponent {
 
   especialistas: Especialista[] = [];
   pacientes: Paciente[] = [];
+  admins: Admin[] = [];
   especialistaSet: Set<string> = new Set();
   pacienteSet: Set<string> = new Set();
+  adminSet: Set<string> = new Set();
   storage = getStorage(this.firebase);
   fotosRef = ref(this.storage);
   fotos: any[] = [];
@@ -51,6 +63,32 @@ export class UsuariosComponent {
   {
     this.llenarArrayEspecialistas();
     this.llenarArrayPacientes();
+    this.llenarArrayAdmins();
+  }
+
+  llenarArrayAdmins()
+  {
+    this.getAdmins().subscribe(admins =>{
+      admins.forEach(async admin =>
+        {
+          if(!this.adminSet.has(admin.idDoc))
+          {
+            await(listAll(this.fotosRef)).then((res) =>{
+              res.items.forEach((itemRef) =>{
+                getDownloadURL(itemRef).then((url)=>{
+                  if(itemRef.fullPath.includes(admin.dni))
+                  {
+                    admin.foto = url;
+                  }
+                })
+              })
+            })
+            this.admins.push(admin);
+            this.adminSet.add(admin.idDoc);
+          }
+        }
+      )
+    })
   }
 
   llenarArrayEspecialistas()
@@ -121,11 +159,14 @@ export class UsuariosComponent {
 
   getEspecialistas() : Observable<Especialista[]>
   {
-
-
-
     const usrRef = collection(this.fire, 'especialistas');
     return collectionData(usrRef, {idField: 'idDoc'}) as Observable<Especialista[]>;
+  }
+
+  getAdmins() : Observable<Admin[]>
+  {
+    const usrRef = collection(this.fire, 'admin');
+    return collectionData(usrRef, {idField: 'idDoc'}) as Observable<Admin[]>;
   }
 
   Activar(especialista:Especialista, flag:boolean)
