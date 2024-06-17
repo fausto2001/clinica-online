@@ -48,7 +48,7 @@ export interface Admin
   styleUrls: ['./usuarios.component.css']
 })
 export class UsuariosComponent {
-
+  selected:string = "option1";
   especialistas: Especialista[] = [];
   pacientes: Paciente[] = [];
   admins: Admin[] = [];
@@ -185,5 +185,10 @@ export class UsuariosComponent {
       })
     }
     this.especialistas = this.especialistas.map(e => e.idDoc === especialista.idDoc ? {...e, validado:flag} : e);
+  }
+
+  onOptionChange(event :any)
+  {
+    this.selected = event.target.value;
   }
 }

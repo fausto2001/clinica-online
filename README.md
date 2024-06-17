@@ -27,5 +27,8 @@
 - Registro administradores agregado.
 - Lista de administradores agregada.
 
+### 17/6/2024: Fix frontend /usuarios
+- Arreglado frontend de /usuarios.
+
 ## Descripción del Proyecto
 ClinicaOnline es una plataforma que permite la gestión de pacientes y especialistas en una clínica. Proporciona funcionalidades para el registro y login de usuarios, gestión de especialidades, y validación de cuentas por correo electrónico.

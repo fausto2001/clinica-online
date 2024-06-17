@@ -10,7 +10,22 @@
     " [routerLink]="['registro-admin']">Crear nueva cuenta de administrador</button>
     <div class="container mt-5">
         <div class="animated-title">Sección Usuarios</div>
-        <div class="card">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"
+            [(ngModel)]="selected" (change)="onOptionChange($event)">
+            <label class="form-check-label" for="inlineRadio1">Especialistas</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"
+            [(ngModel)]="selected" (change)="onOptionChange($event)">
+            <label class="form-check-label" for="inlineRadio2">Pacientes</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"
+            [(ngModel)]="selected" (change)="onOptionChange($event)">
+            <label class="form-check-label" for="inlineRadio3">Administradores</label>
+          </div>
+        <div class="card" *ngIf="selected === 'option1'">
             <div class="card-header">
                 Especialistas
             </div>
@@ -51,7 +66,7 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card" *ngIf="selected === 'option2'">
             <div class="card-header">
                 Pacientes
             </div>
@@ -89,7 +104,7 @@
         </div>
 
 
-        <div class="card">
+        <div class="card" *ngIf="selected === 'option3'">
             <div class="card-header">
                 Administradores
             </div>

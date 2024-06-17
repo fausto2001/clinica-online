@@ -53,3 +53,143 @@ body {
     justify-content: center;
     align-items: center;
   }
+
+.acceso-paciente-1 {
+  position: fixed;
+  right: 360px;
+  bottom: 360px;
+  width: 140px; /* Increased button width */
+  height: 140px; /* Increased button height */
+  border-radius: 50%;
+  background-color: #ff9999;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/clinica-online-47d16.appspot.com/o/33821746perfil.jpg?alt=media&token=b848b057-5616-4372-abe0-497b7d726ab5');
+  background-size: 103%;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.acceso-paciente-2 {
+  position: fixed;
+  right: 360px;
+  bottom: 180px;
+  width: 140px; /* Increased button width */
+  height: 140px; /* Increased button height */
+  border-radius: 50%;
+  background-color: #ff9999;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/clinica-online-47d16.appspot.com/o/40101023perfil.jpg?alt=media&token=50d864a7-5579-4e82-a234-232c8f2f2a6a');
+  background-size: 103%;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.acceso-paciente-3 {
+  position: fixed;
+  right: 360px;
+  bottom: 20px;
+  width: 140px; /* Increased button width */
+  height: 140px; /* Increased button height */
+  border-radius: 50%;
+  background-color: #ff9999;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/clinica-online-47d16.appspot.com/o/21684635perfil.jpg?alt=media&token=65633d0e-efd1-43e1-9078-709601e9d5f0');
+  background-size: 103%;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.acceso-especialista-1 {
+  position: fixed;
+  right: 180px;
+  bottom: 20px;
+  width: 140px; /* Increased button width */
+  height: 140px; /* Increased button height */
+  border-radius: 50%;
+  background-color: #ff9999;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/clinica-online-47d16.appspot.com/o/35468423perfil.jpg?alt=media&token=a060fbd6-6ea2-48eb-87f1-7901856cd1aa');
+  background-size: 103%;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.acceso-especialista-2 {
+  position: fixed;
+  right: 180px;
+  bottom: 180px;
+  width: 140px; /* Increased button width */
+  height: 140px; /* Increased button height */
+  border-radius: 50%;
+  background-color: #ff9999;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/clinica-online-47d16.appspot.com/o/30681985perfil.jpg?alt=media&token=12d0cd07-c471-4a27-a324-03f571c086c8');
+  background-size: 103%;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.acceso-admin-1 {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 140px; /* Increased button width */
+  height: 140px; /* Increased button height */
+  border-radius: 50%;
+  background-color: #ff9999;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/clinica-online-47d16.appspot.com/o/43326245default.jpg?alt=media&token=e45cd496-33b3-46dd-baf6-26ac3d1c1115');
+  background-size: 100%;
+  background-position: 100%;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
