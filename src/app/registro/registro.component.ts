@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./registro.component.css']
 })
 export class RegistroComponent {
-
+  test()
+  {
+    console.log("test");
+  }
 }

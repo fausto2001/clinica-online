@@ -1,0 +1,64 @@
+body{
+    height:100%;
+    width:100%;
+    background-color:#c70707;
+    background-image:url(../../assets/clinic.jpg);
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-size:cover;
+    color:#000000;
+    position:absolute;
+}  
+
+.table-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.btn-activate {
+    width: 100px;
+    height: 40px;
+    border-radius: 20px;
+    transition: transform 0.3s, background-color 0.3s;
+}
+.btn-activate:hover {
+    transform: scale(1.1);
+    background-color: #0056b3;
+}
+.table th, .table td {
+    text-align: center;
+    vertical-align: middle;
+    transition: background-color 0.3s;
+}
+.table-hover tbody tr:hover {
+    background-color: #f2f2f2;
+}
+.card-header {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+.card {
+    margin-bottom: 30px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    animation: fadeInUp 1s ease-in-out;
+}
+/* Title Animation */
+.animated-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 30px;
+    animation: fadeIn 2s ease-in-out;
+}
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}

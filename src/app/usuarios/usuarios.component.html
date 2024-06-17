@@ -1,1 +1,91 @@
-<p>usuarios works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Especialistas y Pacientes</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="animated-title">Sección Usuarios</div>
+
+        <div class="card">
+            <div class="card-header">
+                Especialistas
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">DNI</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido</th>
+                                <th scope="col">Especialidad</th>
+                                <th scope="col">Segunda Especialidad</th>
+                                <th scope="col">Tercera Especialidad</th>
+                                <th scope="col">Mail</th>
+                                <th scope="col">Validación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let especialista of especialistas">
+                                <td><img src="{{especialista.foto}}" class="table-img" alt="Foto"></td>
+                                <td>{{especialista.dni}}</td>
+                                <td>{{especialista.nombre}}</td>
+                                <td>{{especialista.apellido}}</td>
+                                <td>{{especialista.especialidad}}</td>
+                                <td>{{especialista.segundaEspecialidad}}</td>
+                                <td>{{especialista.terceraEspecialidad}}</td>
+                                <td>{{especialista.mail}}</td>
+                                <td>
+                                    <button *ngIf="especialista.validado" class="btn btn-danger btn-activate" (click)="Activar(especialista, false)">Desactivar</button>
+                                    <button *ngIf="!especialista.validado" class="btn btn-success btn-activate" (click)="Activar(especialista, true)">Activar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                Pacientes
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Perfil</th>
+                                <th scope="col">DNI</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido</th>
+                                <th scope="col">Obra Social</th>
+                                <th scope="col">Mail</th>
+                                <th scope="col">Validado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let paciente of pacientes">
+                                <td><img src="{{paciente.fotoPerfil}}" class="table-img" alt="Perfil"></td>
+                                <td>
+                                    <img src="{{paciente.fotodni}}" class="table-img" alt="Foto DNI">
+                                    {{paciente.dni}}
+                                </td>
+                                <td>{{paciente.nombre}}</td>
+                                <td>{{paciente.apellido}}</td>
+                                <td>{{paciente.obraSocial}}</td>
+                                <td>{{paciente.mail}}</td>
+                                <td>{{paciente.validado}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

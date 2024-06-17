@@ -8,11 +8,15 @@ export interface Usuario{
   dni: string;
   contraseña: string;
   validado: boolean;
+  nombre: string;
+  apellido: string;
+  perfil?: string|undefined;
 }
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
   private currentUserSubject: BehaviorSubject<Usuario>;
   public currentUser;
@@ -36,79 +40,94 @@ export class AuthService {
     return collectionData(usrRef, {idField: 'idDoc'}) as Observable<Usuario[]>;
   }
 
+  getAdmins(): Observable<Usuario[]>{
+    const usrRef = collection(this.fire, 'admin');
+    return collectionData(usrRef, {idField: 'idDoc'}) as Observable<Usuario[]>;
+  }
+
   login(dni:string, contraseña:string)
   {
-    if(dni == '100' && contraseña == 'admin')
-    {
-      Swal.fire({
-        title: "admin",
-        text: "En unos segundos serás redirigido",
-        icon: "success"
-      })
-      this.router.navigateByUrl('/usuarios');
-    }
-    else
-    {
-      this.getPacientes().subscribe(pacientes =>{
-        const paciente = pacientes.find(paciente => paciente.dni == dni && paciente.contraseña == contraseña);
-        if(paciente){
-          if(paciente.validado)
-          {
-            Swal.fire({
-              title: "Paciente encontrado!",
-              text: "En unos segundos serás redirigido",
-              icon: "success"
-            })
+    this.getAdmins().subscribe(admins =>{
+      const admin = admins.find(admin => admin.dni == dni && admin.contraseña == contraseña);
+      if(admin){
+        admin.perfil = "admin";
+        this.currentUserSubject.next(admin);
+        console.log(admin);
+        localStorage.setItem('currentUser', JSON.stringify(admin));
+        Swal.fire({
+          title: "admin",
+          text: "En unos segundos serás redirigido",
+          icon: "success"
+        })
+        this.router.navigateByUrl('/usuarios');
+      }
+      else
+      {
+        this.getPacientes().subscribe(pacientes =>{
+          const paciente = pacientes.find(paciente => paciente.dni == dni && paciente.contraseña == contraseña);
+          if(paciente){
+            if(paciente.validado)
+            {
+              this.currentUserSubject.next(paciente);
+              localStorage.setItem('currentUser', JSON.stringify(paciente));
+              Swal.fire({
+                title: "Paciente encontrado!",
+                text: "En unos segundos serás redirigido",
+                icon: "success"
+              })
+            }
+            else
+            {
+              Swal.fire({
+                title: "Tu mail no fue validado aún!",
+                text: "Debes validar tu mail primero.",
+                icon: "warning"
+              })
+            }
           }
           else
           {
-            Swal.fire({
-              title: "Tu mail no fue validado aún!",
-              text: "Debes validar tu mail primero.",
-              icon: "warning"
-            })
-          }
-        }
-        else
-        {
-          console.log("test");
-          this.getEspecialistas().subscribe(especialistas =>{
-            const especialista = especialistas.find(especialista => especialista.dni == dni && especialista.contraseña == contraseña);
-            if(especialista)
-              {
-                if(especialista.validado)
+            console.log("test");
+            this.getEspecialistas().subscribe(especialistas =>{
+              const especialista = especialistas.find(especialista => especialista.dni == dni && especialista.contraseña == contraseña);
+              if(especialista)
                 {
-                  Swal.fire({
-                    title: "Especialista encontrado!",
-                    text: "En unos segundos serás redirigido",
-                    icon: "success"
-                  })
+                  if(especialista.validado)
+                  {
+                    this.currentUserSubject.next(especialista);
+                    localStorage.setItem('currentUser', JSON.stringify(especialista));
+                    Swal.fire({
+                      title: "Especialista encontrado!",
+                      text: "En unos segundos serás redirigido",
+                      icon: "success"
+                    })
+                  }
+                  else
+                  {
+                    Swal.fire({
+                      title: "Todavía no fuiste validado por el administrador!",
+                      text: "Debes esperar a validación del administrador.",
+                      icon: "warning"
+                    })
+                  }
                 }
                 else
                 {
                   Swal.fire({
-                    title: "Todavía no fuiste validado por el administrador!",
-                    text: "Debes esperar a validación del administrador.",
-                    icon: "warning"
+                    title: "El usuario no fue encontrado!",
+                    text: "Reescribí tu usuario o contraseña, por favor.",
+                    icon: "error"
                   })
                 }
-              }
-              else
-              {
-                Swal.fire({
-                  title: "El usuario no fue encontrado!",
-                  text: "Reescribí tu usuario o contraseña, por favor.",
-                  icon: "error"
-                })
-              }
-          })
-        }
-      })
-    }
+            })
+          }
+        })
+      }
+    });
   }
 
   esAdmin(){
     const currentUser = this.currentUserSubject.value;
-    return currentUser && currentUser.dni == '100' && currentUser.contraseña == 'admin';
+    return currentUser && currentUser.perfil == 'admin';
   }
 }

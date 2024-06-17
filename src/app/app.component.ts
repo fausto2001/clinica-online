@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from './services/auth.service';
+import { Usuario } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,14 +9,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'clinica-online';
+  usuarioActivo: Usuario | undefined;
 
-  navbarButtons(string : string)
+  constructor(private authService: AuthService){}
+
+  ngOnInit()
   {
-
-  }
-
-  logout()
-  {
-    
+    this.authService.currentUser.subscribe(user =>{
+      this.usuarioActivo = user;
+      console.log(this.usuarioActivo);
+    })
   }
 }

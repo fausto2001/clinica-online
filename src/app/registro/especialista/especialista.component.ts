@@ -21,16 +21,25 @@ export class EspecialistaComponent implements OnInit{
   especialidadActual: string | undefined = "test";
   nuevaEspecialidad: string | undefined;
   especialidadAgregada: boolean = false;
+  segundaEspecialidadAgregada: boolean = false;
+  terceraEspecialidadAgregada: boolean = false;
+  especialistaAgregado: boolean = false;
+  
 
   constructor(private fb: FormBuilder, private service:PhotoService, private fire:Firestore) {
-    this.getEspecialidades().subscribe(especialidadesBD =>{
-      especialidadesBD.forEach(especialidad =>
-        {
-          this.especialidades.push(especialidad.especialidad);
-        }
-      )
-    })
-    
+    if(this.especialidades === undefined || this.especialidades.length == 0)
+    {
+      this.getEspecialidades().subscribe(especialidadesBD =>{
+        especialidadesBD.forEach(especialidad =>
+          {
+            if(!this.especialidades.includes(especialidad.especialidad))
+            {
+              this.especialidades.push(especialidad.especialidad);
+            }
+          }
+        )
+      })
+    }
   }
 
   ngOnInit()
@@ -39,9 +48,13 @@ export class EspecialistaComponent implements OnInit{
       nombre: ['', [Validators.required, this.noNumbersValidator]],
       apellido: ['', [Validators.required, this.noNumbersValidator]],
       edad: ['', [Validators.required, Validators.min(3), Validators.max(99)]],
-      dni: ['', [Validators.required, Validators.min(100), Validators.max(100000000)]],
+      dni: ['', [Validators.required, Validators.min(100000), Validators.max(100000000)]],
       especialidad: ['', Validators.required],
       nuevaEspecialidad: [''],
+      segundaEspecialidad: [''],
+      segundaNuevaEspecialidad: [''],
+      terceraEspecialidad: [''],
+      terceraNuevaEspecialidad: [''],
       email: ['', [Validators.required, Validators.email, this.emailValidator]],
       contraseña: ['', [Validators.required, Validators.minLength(6)]],
       confirmarContraseña: ['', [Validators.required, Validators.minLength(6)]],
@@ -61,6 +74,7 @@ export class EspecialistaComponent implements OnInit{
 
   async onSubmit(): Promise<void> {
     if (this.especialistaForm.valid) {
+      this.especialistaAgregado = true;
       const dni = this.especialistaForm.value.dni;
       const fotoPerfil = this.especialistaForm.value.fotoPerfil;
       if(fotoPerfil instanceof File)
@@ -79,15 +93,46 @@ export class EspecialistaComponent implements OnInit{
   subirEspecialistaDB(especialista:any)
   {
     const col = collection(this.fire, 'especialistas');
-    if(!this.especialidadAgregada)
+    if(!this.especialidadAgregada && !this.segundaEspecialidadAgregada && !this.terceraEspecialidadAgregada)
     {
       addDoc(col, {nombre: especialista.nombre, apellido: especialista.apellido, dni: especialista.dni, especialidad: especialista.especialidad, 
-      mail: especialista.email, contraseña: especialista.contraseña, validado: false});
+      mail: especialista.email, contraseña: especialista.contraseña, validado: false, segundaEspecialidad: especialista.segundaEspecialidad});
     }
-    else
+    else if(this.especialidadAgregada && !this.segundaEspecialidadAgregada && !this.terceraEspecialidadAgregada)
     {
       addDoc(col, {nombre: especialista.nombre, apellido: especialista.apellido, dni: especialista.dni, especialidad: especialista.nuevaEspecialidad, 
-      mail: especialista.email, contraseña: especialista.contraseña, validado: false});
+      mail: especialista.email, contraseña: especialista.contraseña, validado: false, segundaEspecialidad: especialista.segundaEspecialidad,
+      terceraEspecialidad: especialista.terceraEspecialidad});
+    }
+    else if(this.especialidadAgregada && this.segundaEspecialidadAgregada && !this.terceraEspecialidadAgregada)
+    {
+      addDoc(col, {nombre: especialista.nombre, apellido: especialista.apellido, dni: especialista.dni, especialidad: especialista.nuevaEspecialidad, 
+        mail: especialista.email, contraseña: especialista.contraseña, validado: false, segundaEspecialidad: especialista.segundaNuevaEspecialidad,
+        terceraEspecialidad: especialista.terceraEspecialidad});
+    }
+    else if(this.especialidadAgregada && this.segundaEspecialidadAgregada && this.terceraEspecialidadAgregada)
+    {
+      addDoc(col, {nombre: especialista.nombre, apellido: especialista.apellido, dni: especialista.dni, especialidad: especialista.nuevaEspecialidad, 
+        mail: especialista.email, contraseña: especialista.contraseña, validado: false, segundaEspecialidad: especialista.segundaNuevaEspecialidad,
+        terceraEspecialidad: especialista.terceraNuevaEspecialidad});
+    }
+    else if(!this.especialidadAgregada && this.segundaEspecialidadAgregada && !this.terceraEspecialidadAgregada)
+    {
+      addDoc(col, {nombre: especialista.nombre, apellido: especialista.apellido, dni: especialista.dni, especialidad: especialista.especialidad, 
+        mail: especialista.email, contraseña: especialista.contraseña, validado: false, segundaEspecialidad: especialista.segundaNuevaEspecialidad,
+        terceraEspecialidad: especialista.terceraEspecialidad});
+    }
+    else if(!this.especialidadAgregada && this.segundaEspecialidadAgregada && this.terceraEspecialidadAgregada)
+    {
+      addDoc(col, {nombre: especialista.nombre, apellido: especialista.apellido, dni: especialista.dni, especialidad: especialista.especialidad, 
+        mail: especialista.email, contraseña: especialista.contraseña, validado: false, segundaEspecialidad: especialista.segundaNuevaEspecialidad,
+        terceraEspecialidad: especialista.terceraNuevaEspecialidad});
+    }
+    else if(!this.especialidadAgregada && !this.segundaEspecialidadAgregada && this.terceraEspecialidadAgregada)
+    {
+      addDoc(col, {nombre: especialista.nombre, apellido: especialista.apellido, dni: especialista.dni, especialidad: especialista.especialidad, 
+        mail: especialista.email, contraseña: especialista.contraseña, validado: false, segundaEspecialidad: especialista.segundaEspecialidad,
+        terceraEspecialidad: especialista.terceraNuevaEspecialidad});
     }
   }
 
@@ -113,10 +158,22 @@ export class EspecialistaComponent implements OnInit{
     return collectionData(usrRef, {idField: 'idDoc'}) as Observable<Especialidad[]>;
   }
 
-  agregarEspecialidad(especialidad:any)
+  agregarEspecialidad(especialidad:any, level:number)
   {
     const col = collection(this.fire, 'especialidades');
     addDoc(col, {especialidad:especialidad});
-    this.especialidadAgregada = true;
+    switch(level)
+    {
+      case 1:
+        this.especialidadAgregada = true;
+        break;
+      case 2:
+        this.segundaEspecialidadAgregada = true;
+        break;
+      case 3:
+        this.terceraEspecialidadAgregada = true;
+        break;
+    }
+    this.especialidades = [];
   }
 }

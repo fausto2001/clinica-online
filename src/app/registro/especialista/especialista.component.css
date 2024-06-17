@@ -10,14 +10,8 @@
   }
 
 
-body {
-    background: url('../../../assets/clinic.jpg') no-repeat center center fixed;
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction:column;
-}
+  body{height:100%;background-color:#c70707;background-image:url(../../../assets/clinic.jpg);height:100vh;
+    background-repeat:no-repeat;background-attachment:fixed;background-size:cover;color:#000000}
 
 .container {
     background-color: rgba(255, 255, 255, 0.9);
@@ -51,4 +45,28 @@ body {
     justify-content: center;
     align-items: center;
   }
+
+  .floating-button-2 {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 140px; /* Increased button width */
+    height: 140px; /* Increased button height */
+    border-radius: 50%;
+    background-color: #ff9999;
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease-in-out;
+    background-image: url('../../../assets/patient.png');
+    background-size: 60%;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
   

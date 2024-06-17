@@ -24,7 +24,8 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                        <li class="nav-item"><a class="nav-link" style="cursor:pointer;" [routerLink]="['paciente']">Paciente</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="cursor:pointer;" [routerLink]="['paciente']">Paciente</a></li>
                         <li class="nav-item"><a class="nav-link" style="cursor:pointer;" [routerLink]="['especialista']">Especialista</a></li>
                     </ul>
                 </div>
@@ -38,10 +39,22 @@
                         <h1 class="text-white font-weight-bold">Antes de comenzar...</h1>
                         <hr class="divider" />
                     </div>
-                    <div class="col-lg-8 align-self-baseline">
+                    <div style="position:absolute; padding-top:0px; padding-right:500px; cursor:pointer;">
+                        <button 
+                        style="cursor:pointer; z-index: 1; background: url(../../assets/patient.png); position:absolute;
+                        width:200px; height:200px; background-size:cover; background-position:center; outline:none; border:none" 
+                        [routerLink]="['paciente']">
+                        </button>
+                    </div>
+                    <div style="position:absolute; padding-top:0px; padding-left:100px;">
+                        <button 
+                        style="cursor:pointer; z-index: 1; background: url(../../assets/doctor.png); position:absolute;
+                        width:200px; height:200px; background-size:cover; background-position:center; outline:none; border:none" 
+                        [routerLink]="['especialista']">
+                        </button>
+                    </div>
+                    <div class="col-lg-8 align-self-baseline" style="padding-bottom:200px">
                         <p class="text-white-75 mb-5">¿Usted es paciente o especialista?</p>
-                        <a class="btn btn-primary btn-xl" [routerLink]="['paciente']">Paciente</a> <br><br>
-                        <a class="btn btn-primary btn-xl" [routerLink]="['especialista']">Especialista</a>
                     </div>
                 </div>
             </div>

@@ -8,12 +8,16 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MailActivacionComponent } from './mail-activacion/mail-activacion.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MailActivacionComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     RouterModule,
