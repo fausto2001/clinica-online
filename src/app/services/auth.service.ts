@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 
 export interface Usuario{
+  email: string;
   dni: string;
   contraseña: string;
   validado: boolean;
@@ -68,6 +69,7 @@ export class AuthService {
           if(paciente){
             if(paciente.validado)
             {
+              paciente.perfil = 'paciente';
               this.currentUserSubject.next(paciente);
               localStorage.setItem('currentUser', JSON.stringify(paciente));
               Swal.fire({
@@ -75,6 +77,7 @@ export class AuthService {
                 text: "En unos segundos serás redirigido",
                 icon: "success"
               })
+              this.router.navigateByUrl('/mi-perfil')
             }
             else
             {
@@ -95,12 +98,15 @@ export class AuthService {
                   if(especialista.validado)
                   {
                     this.currentUserSubject.next(especialista);
+                    especialista.perfil = 'especialista';
                     localStorage.setItem('currentUser', JSON.stringify(especialista));
+                    console.log(this.currentUser);
                     Swal.fire({
                       title: "Especialista encontrado!",
                       text: "En unos segundos serás redirigido",
                       icon: "success"
                     })
+                    this.router.navigateByUrl('/mi-perfil');
                   }
                   else
                   {
@@ -129,5 +135,15 @@ export class AuthService {
   esAdmin(){
     const currentUser = this.currentUserSubject.value;
     return currentUser && currentUser.perfil == 'admin';
+  }
+
+  esEspecialista(){
+    const currentUser = this.currentUserSubject.value;
+    return currentUser && currentUser.perfil == 'especialista';
+  }
+
+  esPaciente(){
+    const currentUser = this.currentUserSubject.value;
+    return currentUser && currentUser.perfil == 'paciente';
   }
 }

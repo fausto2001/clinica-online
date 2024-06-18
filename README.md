@@ -30,5 +30,8 @@
 ### 17/6/2024: Fix frontend /usuarios
 - Arreglado frontend de /usuarios.
 
+### 18/6/2024: Sección mi-perfil agregada
+- Al acceder con especialista o paciente, el usuario es automáticamente redireccionado a mi-perfil.
+
 ## Descripción del Proyecto
 ClinicaOnline es una plataforma que permite la gestión de pacientes y especialistas en una clínica. Proporciona funcionalidades para el registro y login de usuarios, gestión de especialidades, y validación de cuentas por correo electrónico.

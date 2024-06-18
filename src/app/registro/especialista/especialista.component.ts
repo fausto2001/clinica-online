@@ -96,7 +96,8 @@ export class EspecialistaComponent implements OnInit{
     if(!this.especialidadAgregada && !this.segundaEspecialidadAgregada && !this.terceraEspecialidadAgregada)
     {
       addDoc(col, {nombre: especialista.nombre, apellido: especialista.apellido, dni: especialista.dni, especialidad: especialista.especialidad, 
-      mail: especialista.email, contraseña: especialista.contraseña, validado: false, segundaEspecialidad: especialista.segundaEspecialidad});
+      mail: especialista.email, contraseña: especialista.contraseña, validado: false, segundaEspecialidad: especialista.segundaEspecialidad,
+      terceraEspecialidad: especialista.terceraEspecialidad});
     }
     else if(this.especialidadAgregada && !this.segundaEspecialidadAgregada && !this.terceraEspecialidadAgregada)
     {
