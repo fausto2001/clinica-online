@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { MiPerfilComponent } from 'src/app/mi-perfil/mi-perfil.component';
 import { MisHorariosComponent } from 'src/app/mi-perfil/mis-horarios/mis-horarios.component';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {path: '', component:MiPerfilComponent},
@@ -13,6 +14,7 @@ const routes: Routes = [
   declarations: [MiPerfilComponent, MisHorariosComponent],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild(routes)
   ]
 })

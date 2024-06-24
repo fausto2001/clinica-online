@@ -1,1 +1,170 @@
-<p>mis-horarios works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disponibilidad Horaria</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Global Styles */
+        body {
+            height: 100vh;
+            width: 100%;
+            background-color: #c70707;
+            background-image: url('../../../assets/clinic.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .floating-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background-color: #ff9999;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease-in-out;
+            background-image: url('../../../assets/casa.png');
+            background-size: 60%;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-overlay .spinner-border {
+            width: 4rem;
+            height: 4rem;
+        }
+
+        .loading-overlay p {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div *ngIf="loading" class="loading-overlay">
+        <div class="spinner-border text-light" role="status">
+          <span class="sr-only">Cargando...</span>
+        </div>
+        <p class="text-light mt-2">Cargando...</p>
+    </div>
+    <div *ngIf="!loading" class="container">
+        <div class="row">
+            <div class="col-12 mb-3">
+                <h2 class="text-center">Disponibilidad Horaria</h2>
+            </div>
+            <div class="col-sm-2">Especialidad:</div>
+            <div class="col-sm-10">
+                <div *ngIf="usuarioActual.especialidad" class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="especialidad" [(ngModel)]="selectedEspecialidad" [value]="usuarioActual.especialidad" id="inlineRadio1" (change)="handleEspecialidadChange()">
+                    <label class="form-check-label" for="inlineRadio1">{{usuarioActual.especialidad}}</label>
+                </div>
+                <div *ngIf="usuarioActual.segundaEspecialidad" class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="especialidad" [(ngModel)]="selectedEspecialidad" [value]="usuarioActual.segundaEspecialidad" id="inlineRadio2" (change)="handleEspecialidadChange()">
+                    <label class="form-check-label" for="inlineRadio2">{{usuarioActual.segundaEspecialidad}}</label>
+                </div>
+                <div *ngIf="usuarioActual.terceraEspecialidad" class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="especialidad" [(ngModel)]="selectedEspecialidad" [value]="usuarioActual.terceraEspecialidad" id="inlineRadio3" (change)="handleEspecialidadChange()">
+                    <label class="form-check-label" for="inlineRadio3">{{usuarioActual.terceraEspecialidad}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12">
+                <h3 class="text-center">Sección Horarios {{usuarioActual.nombre}} {{usuarioActual.apellido}}</h3>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12">
+                <h4>Disponibilidad horaria para {{selectedEspecialidad}}:</h4>
+            </div>
+        </div>
+        <form (ngSubmit)="saveHorarios()">
+            <div *ngFor="let dia of dias; let i = index" class="form-group row align-items-center">
+                <div class="col-sm-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" [(ngModel)]="horarios[dia].trabaja" name="{{ dia }}_trabaja" id="check-{{ i }}">
+                        <label class="form-check-label" for="check-{{ i }}">{{ dia }}</label>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <label>Entrada</label>
+                    <select class="form-control" [(ngModel)]="horarios[dia].entrada" name="{{ dia }}_entrada" [disabled]="!horarios[dia].trabaja">
+                        <option *ngFor="let hora of getHoras(dia)" [value]="hora">{{ hora }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-5">
+                    <label>Salida</label>
+                    <select class="form-control" [(ngModel)]="horarios[dia].salida" name="{{ dia }}_salida" [disabled]="!horarios[dia].trabaja">
+                        <option *ngFor="let hora of getHoras(dia)" [value]="hora">{{ hora }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row align-items-center">
+                <label class="col-sm-2 col-form-label">Duración de la sesión</label>
+                <div class="col-sm-10">
+                    <select class="form-control" [(ngModel)]="duracionSesion" name="duracionSesion">
+                        <option *ngFor="let duracion of duraciones" [value]="duracion">{{ duracion }} mins</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12 text-center">
+                    <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <a class="floating-button" [routerLink]="['/mi-perfil']"></a>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

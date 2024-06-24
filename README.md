@@ -33,5 +33,9 @@
 ### 18/6/2024: Sección mi-perfil agregada
 - Al acceder con especialista o paciente, el usuario es automáticamente redireccionado a mi-perfil.
 
+### 24/6/2024: Sección mis-horarios agregada
+- Sección mis-horarios agregada.
+- Especialistas pueden guardar y cargar horarios de acuerdo a especialidad.
+
 ## Descripción del Proyecto
 ClinicaOnline es una plataforma que permite la gestión de pacientes y especialistas en una clínica. Proporciona funcionalidades para el registro y login de usuarios, gestión de especialidades, y validación de cuentas por correo electrónico.
