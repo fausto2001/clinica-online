@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turnos</title>
+</head>
+<body>
+    <div *ngIf="loading" class="loading-overlay">
+        <div class="spinner-border text-light" role="status">
+            <span class="sr-only">Cargando...</span>
+        </div>
+        <p class="text-light mt-2">Cargando...</p>
+    </div>
+    <div class="container mt-5" *ngIf="!loading">
+        <div *ngIf="!loading && step == 1">
+            <h1 class="title">Sección mis turnos</h1>
+            <div class="btn-group mb-3" role="group" aria-label="Basic radio toggle button group">
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio0" autocomplete="off"
+                [(ngModel)]="selected" value="option0" (change)="onOptionChange($event)">
+                <label class="btn btn-outline-primary" for="btnradio0">Todos los turnos</label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
+                [(ngModel)]="selected" value="option1" (change)="onOptionChange($event)">
+                <label class="btn btn-outline-primary" for="btnradio1">Especialidad</label>
+
+                <div *ngIf="usuarioActual.perfil=='especialista'">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
+                    [(ngModel)]="selected" value="option2" (change)="onOptionChange($event)">
+                    <label class="btn btn-outline-primary" for="btnradio2">Pacientes</label>
+                </div>
+
+                <div *ngIf="usuarioActual.perfil=='paciente'">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off"
+                    [(ngModel)]="selected" value="option3" (change)="onOptionChange($event)">
+                    <label class="btn btn-outline-primary" for="btnradio3">Especialista</label>
+                </div>
+            </div>
+
+            <div *ngIf="selected === 'option1'" class="form-group">
+                <div *ngFor="let especialidad of especialidades" class="form-check">
+                    <input class="form-check-input" type="radio" id="{{especialidad.especialidad}}" name="especialidad"
+                    [(ngModel)]="espElegido" [value]="especialidad" (change)="espChange()">
+                    <label class="form-check-label" for="{{especialidad.especialidad}}">{{especialidad.especialidad}}</label>
+                </div>
+            </div>
+            <div *ngIf="selected === 'option2'" class="form-group">
+                <div *ngFor="let paciente of pacientes" class="form-check">
+                    <input class="form-check-input" type="radio" id="{{paciente.dni}}" name="especialista"
+                    [(ngModel)]="espElegido" [value]="paciente" (change)="espChange()">
+                    <label class="form-check-label" for="{{paciente.dni}}">{{paciente.nombre}} {{paciente.apellido}}</label>
+                </div>
+            </div>
+            <div *ngIf="selected === 'option3'" class="form-group">
+                <div *ngFor="let especialista of especialistas" class="form-check">
+                    <input class="form-check-input" type="radio" id="{{especialista.dni}}" name="especialista"
+                    [(ngModel)]="espElegido" [value]="especialista" (change)="espChange()">
+                    <label class="form-check-label" for="{{especialista.dni}}">{{especialista.nombre}} {{especialista.apellido}}</label>
+                </div>
+            </div>
+            <div *ngIf="selected == 'option1' || selected == 'option2' || selected == 'option3' || selected == 'option0'">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Hora</th>
+                            <th scope="col">Especialista</th>
+                            <th scope="col">Especialidad</th>
+                            <th scope="col">Paciente</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let turno of currentTurnos">
+                            <td>{{turno.dia}}</td>
+                            <td>{{turno.start}}</td>
+                            <td>{{turno.especialistaNombre}}</td>
+                            <td>{{turno.especialidad}}</td>
+                            <td>{{turno.pacienteNombre}}</td>
+                            <td>{{turno.condicion}}</td>
+                            <td *ngIf="(usuarioActual.perfil=='especialista') && 
+                            (turno.condicion != 'Realizado' && turno.condicion != 'Rechazado' && turno.condicion != 'Cancelado')">
+                                <button class="btn btn-danger" 
+                                (click)="cancelarTurno(turno.paciente, turno.especialista, turno.especialidad, turno.dia, turno.start, 'Cancelado')"
+                                >Cancelar</button>
+                            </td>
+                            <td *ngIf="(usuarioActual.perfil=='especialista') && 
+                            (turno.condicion != 'Aceptado' && turno.condicion != 'Realizado' && turno.condicion != 'Cancelado' && turno.condicion != 'Rechazado')">
+                                <button class="btn btn-danger" 
+                                (click)="cancelarTurno(turno.paciente, turno.especialista, turno.especialidad, turno.dia, turno.start, 'Rechazado')"
+                                >Rechazar</button>
+                            </td>
+                            <td *ngIf="(usuarioActual.perfil=='especialista') && 
+                            (turno.condicion != 'Aceptado' && turno.condicion != 'Realizado' && turno.condicion != 'Cancelado')">
+                                <button class="btn btn-success" 
+                                (click)="aceptarTurno(turno.paciente, turno.especialista, turno.especialidad, turno.dia, turno.start, 'Aceptado')"
+                                >Aceptar</button>
+                            </td>
+                            <td *ngIf="(usuarioActual.perfil=='especialista') && 
+                            (turno.condicion == 'Aceptado')">
+                                <button class="btn btn-success" 
+                                (click)="finalizarTurno(turno.paciente, turno.especialista, turno.especialidad, turno.dia, turno.start, 'Finalizado')"
+                                >Finalizar</button>
+                            </td>
+                            <td *ngIf="(usuarioActual.perfil=='especialista') && 
+                            (turno.condicion == 'Finalizado')">
+                                <button class="btn btn-success" 
+                                (click)="resenia(turno.paciente, turno.especialista, turno.especialidad, turno.dia, turno.start)"
+                                >Leer reseña</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div *ngIf="!loading && step == 2">
+            <h1 class="title">Comentario turno</h1>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Explique el motivo del {{condicionAConvertir}} del turno</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" [(ngModel)]="comentario"></textarea>
+            </div>
+            <div style="padding-top:20px">
+                <button class="btn btn-danger" 
+                (click)="cancTurno(turnoAEliminar, condicionAConvertir)">Turno {{condicionAConvertir}}</button>
+            </div>
+        </div>
+        <div *ngIf="!loading && step == 3">
+            <h1 class="title">El turno ha sido cancelado!</h1>
+            <h3>Motivo: {{comentario}}</h3>
+        </div>
+        <div *ngIf="!loading && step == 4">
+            <h1 class="title">El turno ha sido aceptado!</h1>
+        </div>
+        <div *ngIf="!loading && step == 5">
+            <h1 class="title">Comentario turno</h1>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Deje una reseña del turno finalizado.</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" [(ngModel)]="comentario"></textarea>
+            </div>
+            <div style="padding-top:20px">
+                <button class="btn btn-danger" 
+                (click)="finTurno(turnoAEliminar, condicionAConvertir)">Turno {{condicionAConvertir}}</button>
+            </div>
+        </div>
+        <div *ngIf="!loading && step == 6">
+            <h1 class="title">El turno ha sido finalizado!</h1>
+        </div>
+        <div *ngIf="!loading && step == 8">
+            <h1 class="title">Reseña turno</h1>
+            <h3>{{comentario}}</h3>
+        </div>
+    </div>
+    <button *ngIf="!loading && step > 1 && step != 3 && step != 6" class="floating-button-2" (click)="volver()"></button>
+    <button class="floating-button" [routerLink]="['/mi-perfil']"></button>
+</body>

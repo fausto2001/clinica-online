@@ -99,6 +99,10 @@ export class TurnosComponent {
                 this.step++;
                 this.turnoAEliminar = turno;
               }
+              else
+              {
+                console.log("error");
+              }
             })
           }
         })
@@ -160,7 +164,7 @@ export class TurnosComponent {
   cancTurno(turnoElim:any){
     const turnoRef = doc(this.fire, 'turnos', turnoElim.idDoc);
     updateDoc(turnoRef,{
-      condicion: 'Rechazado',
+      condicion: 'Cancelado',
       comentario: this.comentario
     })
 
