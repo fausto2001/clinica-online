@@ -1,0 +1,239 @@
+body {
+  height: 100vh;
+  width: 100%;
+  background-color: #c70707;
+  background-image: url('../../assets/clinic.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loading-overlay .spinner-border {
+  width: 4rem;
+  height: 4rem;
+}
+
+.loading-overlay p {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-top: 10px;
+}
+
+/* Appointments Container */
+.appointments-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Title Animation */
+.title {
+  font-size: 2rem;
+  color: #ffffff; /* Change text color to white for better contrast */
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+  padding: 10px 20px; /* Add some padding */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  opacity: 0; /* Initially hidden */
+  transform: translateY(-20px); /* Slide up animation */
+  animation: slideIn 0.5s forwards ease-out; /* Animation definition */
+}
+
+@keyframes slideIn {
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.especialista-button {
+  text-align: center;
+}
+
+.foto-button {
+  background-color: #fff;
+  border: none;
+  border-radius: 50%; /* Make the button circular */
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for depth */
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Smooth scale transition */
+}
+
+.foto-button:hover {
+  transform: scale(1.1); /* Scale up on hover */
+}
+
+.foto {
+  width: 100%;
+  height: auto;
+  border-radius: 50%; /* Ensure the image inside the button is also circular */
+  object-fit: cover;
+}
+
+/* Adjustments for Name Visibility */
+.p-name {
+  margin-top: 8px; /* Adjusted margin for better spacing */
+  font-size: 1rem; /* Slightly smaller font size for better fit */
+  color: #333; /* Darker color for better contrast */
+  background-color: white;
+  padding: 4px 8px; /* Add padding to the name */
+  border-radius: 4px; /* Optional: Add border radius */
+}
+
+.floating-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 140px; /* Increased button width */
+  height: 140px; /* Increased button height */
+  border-radius: 50%;
+  background-color: #ff9999;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+  background-image: url('../../assets/casa.png');
+  background-size: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.floating-button-2 {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 140px; /* Increased button width */
+  height: 140px; /* Increased button height */
+  border-radius: 50%;
+  background-color: #004506;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease-in-out;
+  background-image: url('../../assets/volver.png');
+  background-size: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-container {
+  text-align: center;
+}
+
+.especialidad-button {
+  padding: 15px 30px;
+  font-size: 18px;
+  color: #ffffff;
+  background-color: #007BFF;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.especialidad-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.especialidad-button:active {
+  transform: translateY(2px);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.table th {
+  background-color: #007BFF;
+  color: white;
+  font-weight: bold;
+}
+
+.date-button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.date-button:hover {
+  background-color: #0056b3;
+}
+
+.title-sub {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.time-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.btn-weird {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-weird:hover {
+  background-color: #0056b3;
+}

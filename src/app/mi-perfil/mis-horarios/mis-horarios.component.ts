@@ -31,6 +31,8 @@ export class MisHorariosComponent {
   loading: boolean = true;
 
   constructor(private service: AuthService, private fire:Firestore) {
+    this.horariosDB = [];
+    this.loading = true;
     this.usuarioActual = service.currentUser;
     this.usuarioActual = this.usuarioActual.source.value;
     this.selectedEspecialidad = this.usuarioActual.especialidad;
@@ -65,7 +67,6 @@ export class MisHorariosComponent {
         }
       });
     });
-    console.log(auxArray);
     if (auxArray.length != 0) {
       auxArray.forEach(element =>{
           if(!element.trabaja){

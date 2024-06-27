@@ -1,0 +1,93 @@
+<body>
+    <div *ngIf="loading" class="loading-overlay">
+        <div class="spinner-border text-light" role="status">
+            <span class="sr-only">Cargando...</span>
+        </div>
+        <p class="text-light mt-2">Cargando...</p>
+    </div>
+    <div *ngIf="!loading && step == 1" class="appointments-container">
+        <h1 class="title">Elija su especialista</h1>
+        <div *ngFor="let especialista of fotosEspecialistas" class="especialista-button">
+            <p class="p-name">{{ especialista.nombre }} {{especialista.apellido}}</p>
+            <button class="foto-button">
+                <img (click)="espClick(especialista)" [src]="especialista.foto" alt="Foto de {{ especialista.nombre }}" class="foto">
+            </button>
+        </div>
+    </div>
+    <div *ngIf="!loading && step == 2" class="appointments-container">
+        <h1 class="title">Elija su especialidad para especialista {{especialistaElegido.nombre}} {{especialistaElegido.apellido}}</h1>
+        <div class="button-container">
+            <button class="especialidad-button" (click)="calendario(especialistaElegido.especialidad)">
+                {{especialistaElegido.especialidad}}
+            </button>
+        </div>
+        <div class="button-container" *ngIf="especialistaElegido.segundaEspecialidad" (click)="calendario(especialistaElegido.segundaEspecialidad)">
+            <button class="especialidad-button">
+                {{especialistaElegido.segundaEspecialidad}}
+            </button>
+        </div>
+        <div class="button-container" *ngIf="especialistaElegido.terceraEspecialidad" (click)="calendario(especialistaElegido.terceraEspecialidad)">
+            <button class="especialidad-button">
+                {{especialistaElegido.terceraEspecialidad}}
+            </button>
+        </div>
+    </div>
+    <div *ngIf="!loading && step == 3" class="appointments-container">
+        <h1 class="title">Disponibilidad diaria para {{especialistaElegido.nombre}} {{especialistaElegido.apellido}}
+             en  {{especialidadElegida}}.
+        </h1>
+        <table class ="table">
+            <thead>
+                <tr>
+                    <th scope="col" *ngFor="let dia of diasSem">{{ dia }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td *ngFor="let dia of sem1">
+                        <button *ngIf="!dia.trabaja" class="btn btn-danger" disabled>{{dia.date}}</button>
+                        <button *ngIf="dia.trabaja" class="btn btn-success" (click)="horarioFecha(dia)">{{dia.date}}</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td *ngFor="let dia of sem2">
+                        <button *ngIf="!dia.trabaja" class="btn btn-danger" disabled>{{dia.date}}</button>
+                        <button *ngIf="dia.trabaja" class="btn btn-success" (click)="horarioFecha(dia)">{{dia.date}}</button>
+                    </td>
+0                </tr>
+            </tbody>    
+        </table>
+    </div>
+    <div *ngIf="!loading && step == 4" class="appointments-container">
+        <h1 class="title">Disponibilidad diaria para {{ especialistaElegido.nombre }} {{ especialistaElegido.apellido }} en {{ especialidadElegida }} el {{ fechaElegida.date }}.</h1>
+        <h2 class="title-sub">Recordá que el turno dura {{ fechaElegida.duracion }} minutos.</h2>
+    
+        <div class="time-buttons">
+            <div *ngFor="let tiempo of arrayHoras">
+                <button *ngIf="tiempo.disponible && usuarioActual.perfil=='paciente'" class="btn btn-success" 
+                (click)="sacarTurno(tiempo.tiempo, usuarioActual.dni)">{{ tiempo.tiempo }}</button>
+                <button *ngIf="!tiempo.disponible && usuarioActual.perfil=='paciente'" class="btn btn-danger" 
+                disabled>{{tiempo.tiempo}}</button>
+                <button *ngIf="tiempo.disponible && usuarioActual.perfil=='admin'" class="btn btn-success" 
+                (click)="sacarTurnoAdmin(tiempo.tiempo)">{{ tiempo.tiempo }}</button>
+                <button *ngIf="!tiempo.disponible && usuarioActual.perfil=='admin'" class="btn btn-danger" 
+                disabled>{{tiempo.tiempo}}</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!loading && step == 5" class="appointments-container">
+        <h1 class="title">Elija para qué paciente es el turno</h1>
+        <div *ngFor="let paciente of fotosPacientes" class="especialista-button">
+            <p class="p-name">{{ paciente.nombre }} {{paciente.apellido}}</p>
+            <button class="foto-button">
+                <img (click)="sacarTurno(adminTurnoTiempo, paciente.dni)" [src]="paciente.foto" alt="Foto de {{ paciente.nombre }}" class="foto">
+            </button>
+        </div>
+    </div>
+    <div *ngIf="!loading && step == 6" class="appointments-container">
+        <h1 class="title">Pediste tu turno satisfactoriamente!</h1>
+        <h3 class="title-sub">Muchas gracias por usar la Clínica Online</h3>
+    </div>
+</body>
+<button *ngIf="!loading && step > 1 && step != 6" class="floating-button-2" (click)="volver()"></button>
+<button class="floating-button" [routerLink]="['/mi-perfil']"></button>

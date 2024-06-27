@@ -7,7 +7,9 @@ const routes: Routes = [
   {path: 'registro', loadChildren: ()=>import('./modules/registro/registro.module').then(m => m.RegistroModule)},
   {path: 'usuarios', loadChildren: ()=>import('./modules/usuarios/usuarios.module').then(m => m.UsuariosModule)},
   {path: 'mail-activacion', loadChildren: ()=>import('./modules/mail-activacion/mail-activacion.module').then(m => m.MailActivacionModule)},
-  {path: 'mi-perfil', loadChildren: ()=>import('./modules/mi-perfil/mi-perfil.module').then(m => m.MiPerfilModule)}
+  {path: 'mi-perfil', loadChildren: ()=>import('./modules/mi-perfil/mi-perfil.module').then(m => m.MiPerfilModule)},
+  {path: 'solicitar-turno', loadChildren: ()=>import('./modules/solicitar-turno/solicitar-turno.module').then(m => m.SolicitarTurnoModule)},
+  {path: 'turnos', loadChildren: ()=>import('./modules/turnos/turnos.module').then(m => m.TurnosModule)}
 ];
 
 @NgModule({

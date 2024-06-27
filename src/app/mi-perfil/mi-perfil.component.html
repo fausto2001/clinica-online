@@ -38,14 +38,23 @@
                     <h4>Información del Administrador:</h4>
                     <p>DNI: {{usuarioActual.dni}}</p>
                     <p>Mail: {{usuarioActual.mail}}</p>
+                    <button [routerLink]="['/solicitar-turno']">Solicitar turno</button>
+                    <button [routerLink]="['/usuarios']">Sección usuarios</button>
+                    <button [routerLink]="['/turnos']">Turnos</button>
+                </div>
+                <div *ngIf="usuarioActual.perfil == 'paciente'" class="info-container">
+                    <h4>Información del Paciente:</h4>
+                    <p>DNI: {{usuarioActual.dni}}</p>
+                    <p>Mail: {{usuarioActual.mail}}</p>
+                    <button [routerLink]="['/solicitar-turno']">Solicitar turno</button>
                 </div>
             </div>
         </div>
     </div>
 </body>
 <button class="floating-button" [routerLink]="['']"></button>
-<button *ngIf="usuarioActual.perfil == 'especialista'" class="horarios-floating-button" [routerLink]="['mis-horarios']"></button>
+<!--<button *ngIf="usuarioActual.perfil == 'especialista'" class="horarios-floating-button" [routerLink]="['mis-horarios']"></button>
 <h3 *ngIf="usuarioActual.perfil == 'especialista'" class="horarios-text">Mis horarios</h3>
 <button class="floating-button-3" [routerLink]="['']"></button>
-<button class="floating-button-4" [routerLink]="['']"></button>
+<button class="floating-button-4" [routerLink]="['']"></button>-->
 </html>

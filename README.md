@@ -37,5 +37,15 @@
 - Sección mis-horarios agregada.
 - Especialistas pueden guardar y cargar horarios de acuerdo a especialidad.
 
+### 26/6/2024: Sección solicitar-turno agregada
+- Sección solicitar turno agregada.
+- Pacientes pueden pedir turnos.
+- Administradores pueden pedir turnos para pacientes.
+
+### 27/6/2024: Sección turnos agregada
+- Sección turnos agregada.
+- Administradores pueden ver listado de turnos.
+- Administradores pueden rechazar turnos.
+
 ## Descripción del Proyecto
 ClinicaOnline es una plataforma que permite la gestión de pacientes y especialistas en una clínica. Proporciona funcionalidades para el registro y login de usuarios, gestión de especialidades, y validación de cuentas por correo electrónico.

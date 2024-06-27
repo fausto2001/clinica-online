@@ -4,10 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { MiPerfilComponent } from 'src/app/mi-perfil/mi-perfil.component';
 import { MisHorariosComponent } from 'src/app/mi-perfil/mis-horarios/mis-horarios.component';
 import { FormsModule } from '@angular/forms';
+import { EspecialistaService } from 'src/app/services/especialista.service';
 
 const routes: Routes = [
   {path: '', component:MiPerfilComponent},
-  {path: 'mis-horarios', component:MisHorariosComponent}
+  {path: 'mis-horarios', component:MisHorariosComponent, canActivate: [EspecialistaService]}
 ]
 
 @NgModule({
