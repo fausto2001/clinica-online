@@ -104,7 +104,13 @@
               <div *ngIf="pacienteForm.controls['fotoDNI'].errors?.['required'] && pacienteForm.controls['fotoDNI'].touched" class="error">
                   Foto del DNI es requerida.
               </div>
-          </div>        
+          </div>  
+          <div class="col-12 mb-3" [ngClass]="{'has-error': !pacienteForm.controls['recaptcha'].valid && pacienteForm.controls['recaptcha'].touched}">
+            <re-captcha formControlName="recaptcha" siteKey="6Lf1lwYqAAAAACZgBRhb4rvyKU2yq4qN6xPfKMyj"></re-captcha>
+            <div *ngIf="pacienteForm.controls['recaptcha'].errors?.['required'] && pacienteForm.controls['recaptcha'].touched" class="error">
+              Captcha es requerido.
+            </div>
+          </div>      
           <div class="col-12 mb-3">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="terminosCheckbox" formControlName="terminos">

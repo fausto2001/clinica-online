@@ -59,7 +59,8 @@ export class EspecialistaComponent implements OnInit{
       contraseña: ['', [Validators.required, Validators.minLength(6)]],
       confirmarContraseña: ['', [Validators.required, Validators.minLength(6)]],
       fotoPerfil: [null, Validators.required],
-      terminos: [false, Validators.requiredTrue]
+      terminos: [false, Validators.requiredTrue],
+      recaptcha: ['', Validators.required]
     }, { validator: this.passwordMatchValidator });
   }
 

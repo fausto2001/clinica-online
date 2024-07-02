@@ -165,7 +165,6 @@ export class MisTurnosComponent {
     else
     {
       this.turnos.forEach(turno =>{
-        console.log(turno);
         if(turno.paciente == this.usuarioActual.dni || turno.especialista == this.usuarioActual.dni){
           this.pacientes.forEach(paciente =>{
             if(turno.paciente == paciente.dni){
@@ -197,7 +196,7 @@ export class MisTurnosComponent {
   cancelarTurno(paciente:any, especialista:any, especialidad:any, dia:any, start:any, cond:any){
     this.condicionAConvertir = cond;
     this.turnos.forEach(turno =>{
-      if(turno.especialista == especialista && turno.paciente == paciente && turno.especialidad == especialidad){
+      if(turno.especialista == especialista && turno.paciente == paciente && turno.especialidad == especialidad && turno.dia == dia && turno.start == start){
         this.pacientes.forEach(paciente =>{
           if(turno.paciente == paciente.dni){
             this.especialistas.forEach(especialista =>{
@@ -215,7 +214,7 @@ export class MisTurnosComponent {
   aceptarTurno(paciente:any, especialista:any, especialidad:any, dia:any, start:any, cond:any){
     this.condicionAConvertir = cond;
     this.turnos.forEach(turno =>{
-      if(turno.especialista == especialista && turno.paciente == paciente && turno.especialidad == especialidad){
+      if(turno.especialista == especialista && turno.paciente == paciente && turno.especialidad == especialidad && turno.dia == dia && turno.start == start){
         this.pacientes.forEach(paciente =>{
           if(turno.paciente == paciente.dni){
             this.especialistas.forEach(especialista =>{
@@ -234,7 +233,7 @@ export class MisTurnosComponent {
   finalizarTurno(paciente:any, especialista:any, especialidad:any, dia:any, start:any, cond:any){
     this.condicionAConvertir = cond;
     this.turnos.forEach(turno =>{
-      if(turno.especialista == especialista && turno.paciente == paciente && turno.especialidad == especialidad){
+      if(turno.especialista == especialista && turno.paciente == paciente && turno.especialidad == especialidad && turno.dia == dia && turno.start == start){
         this.pacientes.forEach(paciente =>{
           if(turno.paciente == paciente.dni){
             this.especialistas.forEach(especialista =>{
@@ -252,7 +251,7 @@ export class MisTurnosComponent {
 
   resenia(paciente:any, especialista:any, especialidad:any, dia:any, start:any){
     this.turnos.forEach(turno =>{
-      if(turno.especialista == especialista && turno.paciente == paciente && turno.especialidad == especialidad){
+      if(turno.especialista == especialista && turno.paciente == paciente && turno.especialidad == especialidad && turno.dia == dia && turno.start == start){
         this.pacientes.forEach(paciente =>{
           if(turno.paciente == paciente.dni){
             this.especialistas.forEach(especialista =>{
@@ -282,6 +281,49 @@ export class MisTurnosComponent {
     updateDoc(turnoRef,{
       condicion: cond,
       comentario: this.comentario
+    })
+    this.step = 6;
+  }
+  
+  cancTurnPac(paciente:any, especialista:any, especialidad:any, dia:any, start:any, cond:any){
+    this.condicionAConvertir = cond;
+    this.turnos.forEach(turno =>{
+      if(turno.especialista == especialista && turno.paciente == paciente && turno.especialidad == especialidad && turno.dia == dia && turno.start == start){
+        this.pacientes.forEach(paciente =>{
+          if(turno.paciente == paciente.dni){
+            this.especialistas.forEach(especialista =>{
+              if(turno.especialista == especialista.dni){
+                this.step = 2;
+                this.turnoAEliminar = turno;
+              }
+            })
+          }
+        })
+      }
+    })
+  }
+
+  pacResenia(paciente:any, especialista:any, especialidad:any, dia:any, start:any){
+    this.turnos.forEach(turno =>{
+      if(turno.especialista == especialista && turno.paciente == paciente && turno.especialidad == especialidad && turno.dia == dia && turno.start == start){
+        this.pacientes.forEach(paciente =>{
+          if(turno.paciente == paciente.dni){
+            this.especialistas.forEach(especialista =>{
+              if(turno.especialista == especialista.dni){
+                this.step = 11;
+                this.turnoAEliminar = turno;
+              }
+            })
+          }
+        })
+      }
+    })
+  }
+
+  pacRec(turnoElim:any){
+    const turnoRef = doc(this.fire, 'turnos', turnoElim.idDoc);
+    updateDoc(turnoRef,{
+      comentarioPac: this.comentario
     })
     this.step = 6;
   }

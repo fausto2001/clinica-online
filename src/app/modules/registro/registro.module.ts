@@ -5,6 +5,7 @@ import { RegistroComponent } from 'src/app/registro/registro.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PacienteComponent } from 'src/app/registro/paciente/paciente.component';
 import { EspecialistaComponent } from 'src/app/registro/especialista/especialista.component';
+import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
 
 const routes: Routes = [
   { path: '', component: RegistroComponent},
@@ -18,6 +19,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
     RouterModule.forChild(routes)
   ]
 })

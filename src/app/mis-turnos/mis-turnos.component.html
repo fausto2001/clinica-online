@@ -81,19 +81,19 @@
                             <td>{{turno.pacienteNombre}}</td>
                             <td>{{turno.condicion}}</td>
                             <td *ngIf="(usuarioActual.perfil=='especialista') && 
-                            (turno.condicion != 'Realizado' && turno.condicion != 'Rechazado' && turno.condicion != 'Cancelado')">
+                            (turno.condicion != 'Realizado' && turno.condicion != 'Rechazado' && turno.condicion != 'Cancelado' && turno.condicion != 'Finalizado')">
                                 <button class="btn btn-danger" 
                                 (click)="cancelarTurno(turno.paciente, turno.especialista, turno.especialidad, turno.dia, turno.start, 'Cancelado')"
                                 >Cancelar</button>
                             </td>
                             <td *ngIf="(usuarioActual.perfil=='especialista') && 
-                            (turno.condicion != 'Aceptado' && turno.condicion != 'Realizado' && turno.condicion != 'Cancelado' && turno.condicion != 'Rechazado')">
+                            (turno.condicion != 'Aceptado' && turno.condicion != 'Realizado' && turno.condicion != 'Cancelado' && turno.condicion != 'Rechazado' && turno.condicion != 'Finalizado')">
                                 <button class="btn btn-danger" 
                                 (click)="cancelarTurno(turno.paciente, turno.especialista, turno.especialidad, turno.dia, turno.start, 'Rechazado')"
                                 >Rechazar</button>
                             </td>
                             <td *ngIf="(usuarioActual.perfil=='especialista') && 
-                            (turno.condicion != 'Aceptado' && turno.condicion != 'Realizado' && turno.condicion != 'Cancelado')">
+                            (turno.condicion != 'Aceptado' && turno.condicion != 'Realizado' && turno.condicion != 'Cancelado' && turno.condicion != 'Finalizado')">
                                 <button class="btn btn-success" 
                                 (click)="aceptarTurno(turno.paciente, turno.especialista, turno.especialidad, turno.dia, turno.start, 'Aceptado')"
                                 >Aceptar</button>
@@ -104,11 +104,21 @@
                                 (click)="finalizarTurno(turno.paciente, turno.especialista, turno.especialidad, turno.dia, turno.start, 'Finalizado')"
                                 >Finalizar</button>
                             </td>
-                            <td *ngIf="(usuarioActual.perfil=='especialista') && 
+                            <td *ngIf="(usuarioActual.perfil=='especialista' || usuarioActual.perfil == 'paciente') && 
                             (turno.condicion == 'Finalizado')">
-                                <button class="btn btn-success" 
+                                <button class="btn btn-primary" 
                                 (click)="resenia(turno.paciente, turno.especialista, turno.especialidad, turno.dia, turno.start)"
                                 >Leer reseña</button>
+                            </td>
+                            <td *ngIf="(usuarioActual.perfil == 'paciente') && (turno.condicion != 'Finalizado' && turno.condicion != 'Cancelado')">
+                                <button class="btn btn-danger" 
+                                (click)="cancTurnPac(turno.paciente, turno.especialista, turno.especialidad, turno.dia, turno.start, 'Cancelado')"
+                                >Cancelar</button>
+                            </td>
+                            <td *ngIf="(usuarioActual.perfil == 'paciente') && (turno.condicion == 'Finalizado') && (!turno.comentarioPac)">
+                                <button class="btn btn-primary"
+                                (click)="pacResenia(turno.paciente, turno.especialista, turno.especialidad, turno.dia, turno.start)"
+                                >Dejar reseña</button>
                             </td>
                         </tr>
                     </tbody>
@@ -150,6 +160,17 @@
         <div *ngIf="!loading && step == 8">
             <h1 class="title">Reseña turno</h1>
             <h3>{{comentario}}</h3>
+        </div>
+        <div *ngIf="!loading && step == 11">
+            <h1 class="title">Comentario turno</h1>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Deje una reseña del turno</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" [(ngModel)]="comentario"></textarea>
+            </div>
+            <div style="padding-top:20px">
+                <button class="btn btn-primary" 
+                (click)="pacRec(turnoAEliminar)">Dejar reseña</button>
+            </div>
         </div>
     </div>
     <button *ngIf="!loading && step > 1 && step != 3 && step != 6" class="floating-button-2" (click)="volver()"></button>
