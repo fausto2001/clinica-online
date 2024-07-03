@@ -15,6 +15,7 @@ export class MisTurnosComponent {
   storage = getStorage(this.firebase);
   fotosRef = ref(this.storage);
   selected:string = 'option0';
+  search:string = '';
   especialidades: any[] = [];
   especialistas: any[] = [];
   fotos: any[] = [];
@@ -24,6 +25,16 @@ export class MisTurnosComponent {
   currentTurnos: any[] = [];
   espElegido: any;
   pacientes: any[] = [];
+  espTurno:string = '';
+  pacTurno:string = '';
+  historiaClinicaTxt:any="";
+  formData = {
+    altura: '',
+    peso: '',
+    temperatura: '',
+    presion: '',
+    dynamicData: [{ clave: '', valor: '' }]
+  };
   step = 1;
   turnoAEliminar: any;
   comentario:any="";
@@ -184,7 +195,7 @@ export class MisTurnosComponent {
 
   volver(){
     this.espChange();
-    if(this.step != 8 && this.step != 4){
+    if(this.step != 8 && this.step != 4 && this.step != 5 && this.step != 15){
     this.step--;}
     else
     {
@@ -257,7 +268,7 @@ export class MisTurnosComponent {
             this.especialistas.forEach(especialista =>{
               if(turno.especialista == especialista.dni){
                 this.turnoAEliminar = turno;
-                this.comentario = turno.comentario;
+                this.comentario = turno.comentarioPac;
                 this.step = 8;
               }
             })
@@ -280,7 +291,8 @@ export class MisTurnosComponent {
     const turnoRef = doc(this.fire, 'turnos', turnoElim.idDoc);
     updateDoc(turnoRef,{
       condicion: cond,
-      comentario: this.comentario
+      comentario: this.comentario,
+      historiaClinica: this.formData
     })
     this.step = 6;
   }
@@ -326,5 +338,72 @@ export class MisTurnosComponent {
       comentarioPac: this.comentario
     })
     this.step = 6;
+  }
+
+  addDynamicData() {
+    if (this.formData.dynamicData.length < 3) {
+      this.formData.dynamicData.push({ clave: '', valor: '' });
+    }
+  }
+
+  submitForm() {
+    console.log(this.formData);
+  }
+
+  historiaClinica(paciente:any, especialista:any, especialidad:any, dia:any, start:any){
+    this.turnos.forEach(turno =>{
+      if(turno.especialista == especialista && turno.paciente == paciente && turno.especialidad == especialidad && turno.dia == dia && turno.start == start){
+        this.pacientes.forEach(paciente =>{
+          if(turno.paciente == paciente.dni){
+            this.especialistas.forEach(especialista =>{
+              if(turno.especialista == especialista.dni){
+                this.step = 15;
+                this.turnoAEliminar = turno;
+                this.historiaClinicaTxt = "Altura: " + turno.historiaClinica.altura + "\nPeso: " + turno.historiaClinica.peso + 
+                "\nPresión: " + turno.historiaClinica.presion + "\nTemperatura: " + turno.historiaClinica.temperatura;
+                if(turno.historiaClinica.dynamicData[0].clave){this.historiaClinicaTxt = this.historiaClinicaTxt 
+                  + "\n" + turno.historiaClinica.dynamicData[0].clave + ": " + turno.historiaClinica.dynamicData[0].valor}
+                if(turno.historiaClinica.dynamicData[1].clave){this.historiaClinicaTxt = this.historiaClinicaTxt  
+                  + "\n" + turno.historiaClinica.dynamicData[1].clave + ": " + turno.historiaClinica.dynamicData[1].valor}
+                if(turno.historiaClinica.dynamicData[2].clave){this.historiaClinicaTxt = this.historiaClinicaTxt 
+                  + "\n" + turno.historiaClinica.dynamicData[2].clave + ": " + turno.historiaClinica.dynamicData[2].valor}
+              }
+            })
+          }
+        })
+      }
+    })
+  }
+
+  onSearchChange(event: any) {
+    if(this.search == ''){
+      this.espChange();
+    }
+    else{
+        if(this.usuarioActual.perfil == 'especialista'){
+        this.currentTurnos = [];
+        this.turnos.forEach(turno =>{
+          let histClTxt = '';
+          try{
+          histClTxt = "Altura: " + turno.historiaClinica.altura + "\nPeso: " + turno.historiaClinica.peso + 
+                "\nPresión: " + turno.historiaClinica.presion + "\nTemperatura: " + turno.historiaClinica.temperatura;
+                if(turno.historiaClinica.dynamicData[0].clave){histClTxt = histClTxt
+                  + "\n" + turno.historiaClinica.dynamicData[0].clave + ": " + turno.historiaClinica.dynamicData[0].valor}
+                if(turno.historiaClinica.dynamicData[1].clave){histClTxt = histClTxt
+                  + "\n" + turno.historiaClinica.dynamicData[1].clave + ": " + turno.historiaClinica.dynamicData[1].valor}
+                if(turno.historiaClinica.dynamicData[2].clave){histClTxt = histClTxt
+                  + "\n" + turno.historiaClinica.dynamicData[2].clave + ": " + turno.historiaClinica.dynamicData[2].valor}
+                } catch(error) {}
+          if((this.usuarioActual.dni == turno.especialista) &&
+            (turno.especialidad.includes(this.search) || turno.condicion.includes(this.search) || turno.dia.includes(this.search) ||
+          turno.especialistaNombre.includes(this.search) || turno.pacienteNombre.includes(this.search) || histClTxt.includes(this.search))){
+          this.currentTurnos.push(turno);
+        }
+        })
+      }
+      else if(this.usuarioActual.perfil == 'paciente'){
+
+      }
+    }
   }
 }

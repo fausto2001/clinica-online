@@ -6,6 +6,8 @@
 - Página de bienvenida.
 - Registro funcional con fotos para pacientes.
 
+![bienvenida](./readmefiles/bienvenido.png)
+
 ### 13/6/2024: Registro especialistas y login agregados
 - Registro especialistas agregado.
 - Login agregado.
@@ -56,6 +58,10 @@
 - Sprint 2 completamente finalizado.
 - Captcha añadido en registro.
 - Los pacientes pueden agregar reseñas.
+
+### 3/7/2024: Filtro de turnos y carga de historia clínica
+- Los especialistas deben cargar historias clínicas.
+- Filtro completo de turnos agregado.
 
 ## Descripción del Proyecto
 ClinicaOnline es una plataforma que permite la gestión de pacientes y especialistas en una clínica. Proporciona funcionalidades para el registro y login de usuarios, gestión de especialidades, y validación de cuentas por correo electrónico.

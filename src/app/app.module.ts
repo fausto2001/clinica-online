@@ -10,17 +10,21 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MailActivacionComponent } from './mail-activacion/mail-activacion.component';
+import { AnimationsComponent } from './animations/animations.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MailActivacionComponent
+    MailActivacionComponent,
+    AnimationsComponent
   ],
   imports: [
     CommonModule,
     BrowserModule,
     AppRoutingModule,
     RouterModule,
+    BrowserAnimationsModule,
     provideFirebaseApp(() => initializeApp({"projectId":"clinica-online-47d16","appId":"1:406208429027:web:12dee30e70d237e3d43ed6",
       "storageBucket":"clinica-online-47d16.appspot.com","apiKey":"AIzaSyB9VGncLe0OChtq_Orfa-E4ntVqOCek2h4",
       "authDomain":"clinica-online-47d16.firebaseapp.com","messagingSenderId":"406208429027","measurementId":"G-BSJF70LDNX"})),

@@ -17,42 +17,61 @@
             <h1 class="title">Sección mis turnos</h1>
             <div class="btn-group mb-3" role="group" aria-label="Basic radio toggle button group">
 
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio0" autocomplete="off"
+                <input *ngIf="search == ''" type="radio" class="btn-check" name="btnradio" id="btnradio0" autocomplete="off"
+                [(ngModel)]="selected" value="option0" (change)="onOptionChange($event)">
+                <input *ngIf="search != ''" type="radio" class="btn-check" name="btnradio" id="btnradio0" autocomplete="off"
                 [(ngModel)]="selected" value="option0" (change)="onOptionChange($event)">
                 <label class="btn btn-outline-primary" for="btnradio0">Todos los turnos</label>
 
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
+                <input *ngIf="search == ''" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
                 [(ngModel)]="selected" value="option1" (change)="onOptionChange($event)">
+                <input *ngIf="search != ''" type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
+                [(ngModel)]="selected" value="option1" (change)="onOptionChange($event)" disabled>
                 <label class="btn btn-outline-primary" for="btnradio1">Especialidad</label>
 
                 <div *ngIf="usuarioActual.perfil=='especialista'">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
+                    <input *ngIf="search == ''" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
                     [(ngModel)]="selected" value="option2" (change)="onOptionChange($event)">
+                    <input *ngIf="search != ''" type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
+                    [(ngModel)]="selected" value="option2" (change)="onOptionChange($event)" disabled>
                     <label class="btn btn-outline-primary" for="btnradio2">Pacientes</label>
                 </div>
 
                 <div *ngIf="usuarioActual.perfil=='paciente'">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off"
+                    <input *ngIf="search == ''" type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off"
                     [(ngModel)]="selected" value="option3" (change)="onOptionChange($event)">
+                    <input *ngIf="search != ''" type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off"
+                    [(ngModel)]="selected" value="option3" (change)="onOptionChange($event)" disabled>
                     <label class="btn btn-outline-primary" for="btnradio3">Especialista</label>
                 </div>
             </div>
 
-            <div *ngIf="selected === 'option1'" class="form-group">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" [(ngModel)]="search" name="search" (ngModelChange)="onSearchChange($event)">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="selected === 'option1' && search == ''" class="form-group">
                 <div *ngFor="let especialidad of especialidades" class="form-check">
                     <input class="form-check-input" type="radio" id="{{especialidad.especialidad}}" name="especialidad"
                     [(ngModel)]="espElegido" [value]="especialidad" (change)="espChange()">
                     <label class="form-check-label" for="{{especialidad.especialidad}}">{{especialidad.especialidad}}</label>
                 </div>
             </div>
-            <div *ngIf="selected === 'option2'" class="form-group">
+            <div *ngIf="selected === 'option2' && search == ''" class="form-group">
                 <div *ngFor="let paciente of pacientes" class="form-check">
                     <input class="form-check-input" type="radio" id="{{paciente.dni}}" name="especialista"
                     [(ngModel)]="espElegido" [value]="paciente" (change)="espChange()">
                     <label class="form-check-label" for="{{paciente.dni}}">{{paciente.nombre}} {{paciente.apellido}}</label>
                 </div>
             </div>
-            <div *ngIf="selected === 'option3'" class="form-group">
+            <div *ngIf="selected === 'option3' && search == ''" class="form-group">
                 <div *ngFor="let especialista of especialistas" class="form-check">
                     <input class="form-check-input" type="radio" id="{{especialista.dni}}" name="especialista"
                     [(ngModel)]="espElegido" [value]="especialista" (change)="espChange()">
@@ -110,6 +129,12 @@
                                 (click)="resenia(turno.paciente, turno.especialista, turno.especialidad, turno.dia, turno.start)"
                                 >Leer reseña</button>
                             </td>
+                            <td *ngIf="(usuarioActual.perfil=='especialista' || usuarioActual.perfil == 'paciente') && 
+                            (turno.condicion == 'Finalizado')">
+                                <button class="btn btn-primary" 
+                                (click)="historiaClinica(turno.paciente, turno.especialista, turno.especialidad, turno.dia, turno.start)"
+                                >Leer historia clínica</button>
+                            </td>
                             <td *ngIf="(usuarioActual.perfil == 'paciente') && (turno.condicion != 'Finalizado' && turno.condicion != 'Cancelado')">
                                 <button class="btn btn-danger" 
                                 (click)="cancTurnPac(turno.paciente, turno.especialista, turno.especialidad, turno.dia, turno.start, 'Cancelado')"
@@ -144,16 +169,57 @@
             <h1 class="title">El turno ha sido aceptado!</h1>
         </div>
         <div *ngIf="!loading && step == 5">
-            <h1 class="title">Comentario turno</h1>
+            <h1 class="title">Historia clínica</h1>
             <div class="form-group">
-                <label for="exampleFormControlTextarea1">Deje una reseña del turno finalizado.</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" [(ngModel)]="comentario"></textarea>
+                <label for="exampleFormControlTextarea1">Ingrese la historia clínica del paciente</label>
             </div>
+            <form>
+                <!-- Static Data -->
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="altura">Altura</label>
+                        <input type="text" class="form-control" id="altura" placeholder="Ingrese la altura del paciente" [(ngModel)]="formData.altura" name="altura">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="peso">Peso</label>
+                        <input type="text" class="form-control" id="peso" placeholder="Ingrese el peso del paciente" [(ngModel)]="formData.peso" name="peso">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="temperatura">Temperatura</label>
+                        <input type="text" class="form-control" id="temperatura" placeholder="Ingrese la temperatura del paciente" [(ngModel)]="formData.temperatura" name="temperatura">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="presion">Presión</label>
+                        <input type="text" class="form-control" id="presion" placeholder="Ingrese la presión del paciente" [(ngModel)]="formData.presion" name="presion">
+                    </div>
+                </div>
+                <!-- Dynamic Data -->
+                <div class="form-row">
+                    <div *ngFor="let item of formData.dynamicData; let i = index" class="form-group col-md-6">
+                        <label for="clave{{i}}">Clave</label>
+                        <input type="text" class="form-control" id="clave{{i}}" placeholder="Ingrese la clave" [(ngModel)]="item.clave" name="clave{{i}}">
+                    </div>
+                    <div *ngFor="let item of formData.dynamicData; let i = index" class="form-group col-md-6">
+                        <label for="valor{{i}}">Valor</label>
+                        <input type="text" class="form-control" id="valor{{i}}" placeholder="Ingrese el valor" [(ngModel)]="item.valor" name="valor{{i}}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <button type="button" class="btn btn-primary" (click)="addDynamicData()" [disabled]="formData.dynamicData.length >= 3">
+                            Añadir Clave/Valor
+                        </button>
+                    </div>
+                </div>
+            </form>
             <div style="padding-top:20px">
-                <button class="btn btn-danger" 
-                (click)="finTurno(turnoAEliminar, condicionAConvertir)">Turno {{condicionAConvertir}}</button>
+                <button class="btn btn-success" (click)="finTurno(turnoAEliminar, condicionAConvertir)">Guardar</button>
             </div>
         </div>
+               
+        
         <div *ngIf="!loading && step == 6">
             <h1 class="title">El turno ha sido finalizado!</h1>
         </div>
@@ -172,7 +238,11 @@
                 (click)="pacRec(turnoAEliminar)">Dejar reseña</button>
             </div>
         </div>
+        <div *ngIf="!loading && step == 15">
+            <h1 class="title">Historia clínica</h1>
+            <h3>{{historiaClinicaTxt}}</h3>
+        </div>
     </div>
-    <button *ngIf="!loading && step > 1 && step != 3 && step != 6" class="floating-button-2" (click)="volver()"></button>
+    <button *ngIf="!loading && step > 1 && step != 3 && step != 6   " class="floating-button-2" (click)="volver()"></button>
     <button class="floating-button" [routerLink]="['/mi-perfil']"></button>
 </body>

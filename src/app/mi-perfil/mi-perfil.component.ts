@@ -2,13 +2,20 @@ import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { getDownloadURL, getStorage, listAll, ref } from '@angular/fire/storage';
 import { FirebaseApp } from '@angular/fire/app';
+import { slideInAnimation } from 'src/app/animations/animations.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-mi-perfil',
   templateUrl: './mi-perfil.component.html',
-  styleUrls: ['./mi-perfil.component.css']
+  styleUrls: ['./mi-perfil.component.css'],
+  animations: [slideInAnimation]
 })
 export class MiPerfilComponent {
+
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+  }
 
   usuarioActual:any;
   storage = getStorage(this.firebase);

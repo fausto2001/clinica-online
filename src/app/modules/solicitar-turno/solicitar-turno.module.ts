@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { SolicitarTurnoComponent } from 'src/app/solicitar-turno/solicitar-turno.component';
 import { FormsModule } from '@angular/forms';
+import { animation } from '@angular/animations';
 
 const routes:Routes = [
-  {path: '', component:SolicitarTurnoComponent}
+  {path: '', component:SolicitarTurnoComponent, data: {animation: 'SolicitarTurnoPage'}}
 ]
 
 @NgModule({
