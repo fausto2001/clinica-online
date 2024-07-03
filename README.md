@@ -6,7 +6,7 @@
 - Página de bienvenida.
 - Registro funcional con fotos para pacientes.
 
-![bienvenida](./readmefiles/bienvenido.png)
+![bienvenida](./readme_files/bienvenido.png)
 
 ### 13/6/2024: Registro especialistas y login agregados
 - Registro especialistas agregado.
