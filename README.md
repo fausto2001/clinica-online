@@ -95,7 +95,14 @@
 - Descarga Excel agregada.
 - Permite a administradores descargar excel con información de pacientes.
 
-![descarga_excel](./reamde_files/descarga_excel.png)
+![descarga_excel](./readme_files/descarga_excel.png)
+
+### 8/7/2024: Descarga PDF. Sprint 3 finalizado
+- Sprint 3 completamente finalizado.
+- Descarga PDF agregada.
+- Permite a pacientes descargar PDF con información de sus turnos.
+
+![descarga_excel](./readme_files/descarga_pdf.png)
 
 ## Descripción del Proyecto
 ClinicaOnline es una plataforma que permite la gestión de pacientes y especialistas en una clínica. Proporciona funcionalidades para el registro y login de usuarios, gestión de especialidades, y validación de cuentas por correo electrónico.

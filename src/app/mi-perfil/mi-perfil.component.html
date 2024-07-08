@@ -7,53 +7,88 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="profile-container">
-        <div class="profile-header">
-            <div class="profile-images">
-                <img *ngIf="usuarioActual.perfil == 'especialista'" src="../../assets/doctor.png" class="profile-img" alt="Foto de perfil">
-                <img *ngIf="usuarioActual.perfil == 'paciente'" src="../../assets/patient.png" class="profile-img" alt="Foto de perfil">
-                <img *ngIf="usuarioActual.perfil == 'admin'" src="../../assets/admin.png" class="profile-img" alt="Foto de perfil">
+    <div *ngIf="step == 1">
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-images">
+                    <img *ngIf="usuarioActual.perfil == 'especialista'" src="../../assets/doctor.png" class="profile-img" alt="Foto de perfil">
+                    <img *ngIf="usuarioActual.perfil == 'paciente'" src="../../assets/patient.png" class="profile-img" alt="Foto de perfil">
+                    <img *ngIf="usuarioActual.perfil == 'admin'" src="../../assets/admin.png" class="profile-img" alt="Foto de perfil">
+                </div>
+                <div class="profile-info">
+                    <h1>{{usuarioActual.nombre}} {{usuarioActual.apellido}}</h1>
+                    <h3>Perfil: {{usuarioActual.perfil}}</h3>
+                </div>
             </div>
-            <div class="profile-info">
-                <h1>{{usuarioActual.nombre}} {{usuarioActual.apellido}}</h1>
-                <h3>Perfil: {{usuarioActual.perfil}}</h3>
+            <div class="profile-section">
+                <h3 *ngIf="usuarioActual.perfil == 'especialista' || usuarioActual.perfil == 'admin'">Foto de perfil:</h3>
+                <h3 *ngIf="usuarioActual.perfil == 'paciente'">Foto de perfil y de DNI:</h3>
+                <div class="section-content">
+                    <img src="{{foto1}}" alt="Foto de perfil">
+                    <img *ngIf="paciente" src="{{foto2}}" class="dni-img" alt="Foto DNI">
+                    <div *ngIf="usuarioActual.perfil == 'especialista'" class="info-container">
+                        <h4>Información del Especialista:</h4>
+                        <p>Especialidad: {{usuarioActual.especialidad}}</p>
+                        <p *ngIf="usuarioActual.segundaEspecialidad">Segunda especialidad: {{usuarioActual.segundaEspecialidad}}</p>
+                        <p *ngIf="usuarioActual.terceraEspecialidad">Tercera especialidad: {{usuarioActual.terceraEspecialidad}}</p>
+                        <p>DNI: {{usuarioActual.dni}}</p>
+                        <p>Mail: {{usuarioActual.mail}}</p>
+                        <button [routerLink]="['mis-horarios']">Mis horarios</button>
+                        <button [routerLink]="['/mis-turnos']">Mis turnos</button>
+                        <button [routerLink]="['/pacientes']">Pacientes</button>
+                    </div>
+                    <div *ngIf="usuarioActual.perfil == 'admin'" class="info-container">
+                        <h4>Información del Administrador:</h4>
+                        <p>DNI: {{usuarioActual.dni}}</p>
+                        <p>Mail: {{usuarioActual.mail}}</p>
+                        <button [routerLink]="['/solicitar-turno']">Solicitar turno</button>
+                        <button [routerLink]="['/usuarios']">Sección usuarios</button>
+                        <button [routerLink]="['/turnos']">Turnos</button>
+                    </div>
+                    <div *ngIf="usuarioActual.perfil == 'paciente'" class="info-container">
+                        <h4>Información del Paciente:</h4>
+                        <p>DNI: {{usuarioActual.dni}}</p>
+                        <p>Mail: {{usuarioActual.mail}}</p>
+                        <button [routerLink]="['/solicitar-turno']">Solicitar turno</button>
+                        <button [routerLink]="['/mis-turnos']">Mis turnos</button>
+                        <button (click)="pdf()">Descarga de PDF</button>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="profile-section">
-            <h3 *ngIf="usuarioActual.perfil == 'especialista' || usuarioActual.perfil == 'admin'">Foto de perfil:</h3>
-            <h3 *ngIf="usuarioActual.perfil == 'paciente'">Foto de perfil y de DNI:</h3>
-            <div class="section-content">
-                <img src="{{foto1}}" alt="Foto de perfil">
-                <img *ngIf="paciente" src="{{foto2}}" class="dni-img" alt="Foto DNI">
-                <div *ngIf="usuarioActual.perfil == 'especialista'" class="info-container">
-                    <h4>Información del Especialista:</h4>
-                    <p>Especialidad: {{usuarioActual.especialidad}}</p>
-                    <p *ngIf="usuarioActual.segundaEspecialidad">Segunda especialidad: {{usuarioActual.segundaEspecialidad}}</p>
-                    <p *ngIf="usuarioActual.terceraEspecialidad">Tercera especialidad: {{usuarioActual.terceraEspecialidad}}</p>
-                    <p>DNI: {{usuarioActual.dni}}</p>
-                    <p>Mail: {{usuarioActual.mail}}</p>
-                    <button [routerLink]="['mis-horarios']">Mis horarios</button>
-                    <button [routerLink]="['/mis-turnos']">Mis turnos</button>
-                    <button [routerLink]="['/pacientes']">Pacientes</button>
+    </div>
+    <div *ngIf="step == 2">
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-images">
+                    <img *ngIf="usuarioActual.perfil == 'especialista'" src="../../assets/doctor.png" class="profile-img" alt="Foto de perfil">
+                    <img *ngIf="usuarioActual.perfil == 'paciente'" src="../../assets/patient.png" class="profile-img" alt="Foto de perfil">
+                    <img *ngIf="usuarioActual.perfil == 'admin'" src="../../assets/admin.png" class="profile-img" alt="Foto de perfil">
                 </div>
-                <div *ngIf="usuarioActual.perfil == 'admin'" class="info-container">
-                    <h4>Información del Administrador:</h4>
-                    <p>DNI: {{usuarioActual.dni}}</p>
-                    <p>Mail: {{usuarioActual.mail}}</p>
-                    <button [routerLink]="['/solicitar-turno']">Solicitar turno</button>
-                    <button [routerLink]="['/usuarios']">Sección usuarios</button>
-                    <button [routerLink]="['/turnos']">Turnos</button>
+                <div class="profile-info">
+                    <h1>{{usuarioActual.nombre}} {{usuarioActual.apellido}}</h1>
+                    <h3>Perfil: {{usuarioActual.perfil}}</h3>
                 </div>
-                <div *ngIf="usuarioActual.perfil == 'paciente'" class="info-container">
-                    <h4>Información del Paciente:</h4>
-                    <p>DNI: {{usuarioActual.dni}}</p>
-                    <p>Mail: {{usuarioActual.mail}}</p>
-                    <button [routerLink]="['/solicitar-turno']">Solicitar turno</button>
-                    <button [routerLink]="['/mis-turnos']">Mis turnos</button>
+            </div>
+            <div class="profile-section">
+                <h3 *ngIf="usuarioActual.perfil == 'paciente'">Especialistas con los que se ha atendido:</h3>
+                <div class="section-content container mt-4">
+                    <div class="row">
+                        <div class="col-md-6 mb-3" *ngFor="let especialista of currentEspecialistas">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h4 class="card-title">Especialista {{especialista.nombre}} {{especialista.apellido}}</h4>
+                                    <button (click)="pdfDownload(especialista)" class="btn btn-primary mt-3">
+                                        Descargar información de turnos con este especialista</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
 <button class="floating-button" [routerLink]="['']"></button>
+<button *ngIf="step != 1" class="floating-button-2" (click)="volver()"></button>
 </html>
