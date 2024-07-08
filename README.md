@@ -85,5 +85,11 @@
 ### 3/7/2024: Readme Fix
 - Fix de errores pequeños del readme.
 
+### 7/7/2024: Sección Pacientes
+- Sección Pacientes añadida.
+- Especialistas pueden ver reseñas e historias clínicas con más facilidad.
+
+![seccion_pacientes](./readme_files/seccion_pacientes.png)
+
 ## Descripción del Proyecto
 ClinicaOnline es una plataforma que permite la gestión de pacientes y especialistas en una clínica. Proporciona funcionalidades para el registro y login de usuarios, gestión de especialidades, y validación de cuentas por correo electrónico.

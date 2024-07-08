@@ -13,12 +13,9 @@ import { RouterOutlet } from '@angular/router';
 
 export class AppComponent {
 
-  animations = [slideInAnimation, fadeInAnimation];
-
   prepareRoute(outlet: RouterOutlet) {
-    const index = Math.random() < 0.5 ? 0 : 1;
-    const selectedAnimation = this.animations[index];
-    console.log('Selected Animation:', selectedAnimation); // Debug log
+    const selectedAnimation = fadeInAnimation;
+    //console.log('Selected Animation:', selectedAnimation);
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'] ? selectedAnimation : '';
   }
   

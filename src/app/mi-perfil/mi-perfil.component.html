@@ -34,6 +34,7 @@
                     <p>Mail: {{usuarioActual.mail}}</p>
                     <button [routerLink]="['mis-horarios']">Mis horarios</button>
                     <button [routerLink]="['/mis-turnos']">Mis turnos</button>
+                    <button [routerLink]="['/pacientes']">Pacientes</button>
                 </div>
                 <div *ngIf="usuarioActual.perfil == 'admin'" class="info-container">
                     <h4>Información del Administrador:</h4>
