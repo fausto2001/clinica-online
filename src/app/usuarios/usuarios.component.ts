@@ -4,6 +4,8 @@ import { Usuario } from '../services/auth.service';
 import { Firestore, collection, collectionData, doc, updateDoc } from '@angular/fire/firestore';
 import { getDownloadURL, getStorage, listAll, ref } from '@angular/fire/storage';
 import { FirebaseApp } from '@angular/fire/app';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
 
 export interface Especialista
 {
@@ -52,18 +54,25 @@ export class UsuariosComponent {
   especialistas: Especialista[] = [];
   pacientes: Paciente[] = [];
   admins: Admin[] = [];
+  turnos : any[] = [];
   especialistaSet: Set<string> = new Set();
   pacienteSet: Set<string> = new Set();
   adminSet: Set<string> = new Set();
   storage = getStorage(this.firebase);
   fotosRef = ref(this.storage);
   fotos: any[] = [];
+  step = 1;
+  EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  EXCEL_EXTENSION = '.xlsx';
 
   constructor(private fire: Firestore, private firebase: FirebaseApp)
   {
     this.llenarArrayEspecialistas();
     this.llenarArrayPacientes();
     this.llenarArrayAdmins();
+    this.getTurnos().subscribe(turno =>{
+      this.turnos = turno;
+    })
   }
 
   llenarArrayAdmins()
@@ -169,6 +178,11 @@ export class UsuariosComponent {
     return collectionData(usrRef, {idField: 'idDoc'}) as Observable<Admin[]>;
   }
 
+  getTurnos() : Observable<any[]>{
+    const turRef = collection(this.fire, 'turnos');
+    return collectionData(turRef) as Observable<any[]>;
+  }
+
   Activar(especialista:Especialista, flag:boolean)
   {
     const especialistaRef = doc(this.fire, 'especialistas', especialista.idDoc);
@@ -190,5 +204,44 @@ export class UsuariosComponent {
   onOptionChange(event :any)
   {
     this.selected = event.target.value;
+  }
+
+  excel(){
+    this.step++;
+  }
+
+  descargaExcel(paciente: any) {
+    const rows: any[] = [];
+
+    this.turnos.forEach(turno => {
+      if (turno.paciente == paciente.dni) {
+        this.especialistas.forEach(especialista => {
+          if (turno.especialista == especialista.dni) {
+            rows.push({
+              Fecha: turno.dia,
+              Hora: turno.start,
+              NombreEspecialista: especialista.nombre,
+              ApellidoEspecialista: especialista.apellido,
+              Especialidad: turno.especialidad
+            });
+          }
+        });
+      }
+    });
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(rows);
+    const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+    this.saveAsExcelFile(excelBuffer, 'turnos');
+  }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: this.EXCEL_TYPE });
+    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + this.EXCEL_EXTENSION);
+  }
+
+  volver(){
+    this.step--;
   }
 }
