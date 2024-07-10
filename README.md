@@ -102,7 +102,13 @@
 - Descarga PDF agregada.
 - Permite a pacientes descargar PDF con información de sus turnos.
 
-![descarga_excel](./readme_files/descarga_pdf.png)
+![descarga_pdf](./readme_files/descarga_pdf.png)
+
+### 10/7/2024: Sección descarga datos.
+- Sección descarga de datos agregada.
+- Permite a administradores descargar múltiples archivos con información.
+
+![descarga_datos](./readme_files/descarga_datos.png)
 
 ## Descripción del Proyecto
 ClinicaOnline es una plataforma que permite la gestión de pacientes y especialistas en una clínica. Proporciona funcionalidades para el registro y login de usuarios, gestión de especialidades, y validación de cuentas por correo electrónico.

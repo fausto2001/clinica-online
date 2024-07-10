@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, collectionData } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -130,6 +130,20 @@ export class AuthService {
         })
       }
     });
+    const now = new Date();
+
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const year = now.getFullYear();
+
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    const dia = `${day}/${month}/${year}`;
+    const tiempo = `${hours}:${minutes}:${seconds}`;
+    const col = collection(this.fire, 'login');
+    addDoc(col, {dni:dni, dia:dia, tiempo:tiempo});
   }
 
   esAdmin(){

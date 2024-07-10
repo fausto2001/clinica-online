@@ -16,6 +16,7 @@
                     <button class="btn-primary" style="margin-left:1%; margin-top:21%; position:absolute; width:277px;
         " [routerLink]="['/turnos']">Turnos</button>
         <button class="btn-primary" style="margin-left:1%; margin-top:23%; position:absolute; width:277px;" (click)="excel()">Excel Usuarios</button>
+        <button class="btn-primary" style="margin-left:1%; margin-top:23%; position:absolute; width:277px;" (click)="datos()">Descarga de datos y estadísticas</button>
         <div class="container mt-5">
             <div class="animated-title">Sección Usuarios</div>
             <div class="form-check form-check-inline">
@@ -163,8 +164,65 @@
             </div>
         </div>
     </div>
+    <div *ngIf="step == 3">
+        <div class="container mt-5">
+            <div class="animated-title">Descarga de datos</div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="../../assets/log.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Log de ingresos al sistema</h5>
+                            <button class="btn btn-success" (click)="logExcel()">Descargar excel</button>
+                            <button class="btn btn-danger" (click)="logPDF()">Descargar PDF</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="../../assets/docsol.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Cantidad de turnos solicitados por médico</h5>
+                            <button class="btn btn-success" (click)="turSolMedExcel()">Descargar excel</button>
+                            <button class="btn btn-danger" (click)="turSolMedPDF()">Descargar PDF</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="../../assets/docfin.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Cantidad de turnos finalizados por médico</h5>
+                            <button class="btn btn-success" (click)="turFinMedExcel()">Descargar excel</button>
+                            <button class="btn btn-danger" (click)="turFinMedPDF()">Descargar PDF</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="../../assets/calendar.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Cantidad de turnos por día</h5>
+                            <button class="btn btn-success" (click)="turXDiaExcel()">Descargar excel</button>
+                            <button class="btn btn-danger" (click)="turXDiaPDF()">Descargar PDF</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="../../assets/esp.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Cantidad de turnos por especialidad</h5>
+                            <button class="btn btn-success" (click)="turXEspExcel()">Descargar excel</button>
+                            <button class="btn btn-danger" (click)="turXEspPDF()">Descargar PDF</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
 </body>
 <button class="floating-button" [routerLink]="['']"></button>
-<button *ngIf="step == 2" class="floating-button-2" (click)="volver()"></button>
+<button *ngIf="step >= 2" class="floating-button-2" (click)="volver()"></button>
 </html>

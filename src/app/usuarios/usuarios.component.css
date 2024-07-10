@@ -108,3 +108,7 @@ body{
     justify-content: center;
     align-items: center;
   }
+
+  .card-body .btn {
+    margin-bottom: 10px;
+}
