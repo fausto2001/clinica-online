@@ -1,0 +1,19 @@
+body{
+    height:100%;
+    width:100%;
+    background-color:#c70707;
+    background-image:url(../../assets/clinic.jpg);
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-size:cover;
+    color:#000000;
+    position:absolute;
+} 
+
+canvas {
+    max-width: 700px; /* Example: Set a maximum width */
+    height: auto; /* Adjust height automatically */
+    margin: 0 auto; /* Center the canvas horizontally */
+    display: block; /* Ensure it behaves as a block element */
+  }
+  

@@ -241,7 +241,7 @@ export class UsuariosComponent {
     this.llenarTurnosPorMedico();
     this.llenarTurnosFinalizadosPorMedico();
     this.llenarTurnosPorDia();
-    console.log(this.turnosPorEspecialidad);
+    console.log(this.turnosPorMedico);
   }
 
   llenarTurnosPorMedico() {

@@ -110,5 +110,10 @@
 
 ![descarga_datos](./readme_files/descarga_datos.png)
 
+### 11/7/2024: Sección gráficos.
+- Gráficos de barra y de torta agregados.
+
+![graficos](./readme_files/graficos.png)
+
 ## Descripción del Proyecto
 ClinicaOnline es una plataforma que permite la gestión de pacientes y especialistas en una clínica. Proporciona funcionalidades para el registro y login de usuarios, gestión de especialidades, y validación de cuentas por correo electrónico.

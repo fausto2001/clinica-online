@@ -11,7 +11,8 @@ const routes: Routes = [
   {path: 'solicitar-turno', loadChildren: ()=>import('./modules/solicitar-turno/solicitar-turno.module').then(m => m.SolicitarTurnoModule)},
   {path: 'turnos', loadChildren: ()=>import('./modules/turnos/turnos.module').then(m => m.TurnosModule)},
   {path: 'mis-turnos', loadChildren: ()=>import('./modules/mis-turnos/mis-turnos.module').then(m => m.MisTurnosModule)},
-  {path: 'pacientes', loadChildren: ()=>import('./modules/pacientes/pacientes.module').then(m => m.PacientesModule)}
+  {path: 'pacientes', loadChildren: ()=>import('./modules/pacientes/pacientes.module').then(m => m.PacientesModule)},
+  {path: 'grafico1', loadChildren: ()=>import('./modules/grafico1/grafico1.module').then(m => m.Grafico1Module)}
 ];
 
 @NgModule({

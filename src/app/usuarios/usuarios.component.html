@@ -15,7 +15,7 @@
         " [routerLink]="['/solicitar-turno']">Solicitar turno</button>
                     <button class="btn-primary" style="margin-left:1%; margin-top:21%; position:absolute; width:277px;
         " [routerLink]="['/turnos']">Turnos</button>
-        <button class="btn-primary" style="margin-left:1%; margin-top:23%; position:absolute; width:277px;" (click)="excel()">Excel Usuarios</button>
+        <button class="btn-primary" style="margin-left:1%; margin-top:25%; position:absolute; width:277px;" (click)="excel()">Excel Usuarios</button>
         <button class="btn-primary" style="margin-left:1%; margin-top:23%; position:absolute; width:277px;" (click)="datos()">Descarga de datos y estadísticas</button>
         <div class="container mt-5">
             <div class="animated-title">Sección Usuarios</div>
@@ -185,6 +185,7 @@
                             <h5 class="card-title">Cantidad de turnos solicitados por médico</h5>
                             <button class="btn btn-success" (click)="turSolMedExcel()">Descargar excel</button>
                             <button class="btn btn-danger" (click)="turSolMedPDF()">Descargar PDF</button>
+                            <button class="btn btn-primary" [routerLink]="['/grafico1']">Ver gráfico</button>
                         </div>
                     </div>
                 </div>
@@ -215,12 +216,20 @@
                             <h5 class="card-title">Cantidad de turnos por especialidad</h5>
                             <button class="btn btn-success" (click)="turXEspExcel()">Descargar excel</button>
                             <button class="btn btn-danger" (click)="turXEspPDF()">Descargar PDF</button>
+                            <button class="btn btn-primary" [routerLink]="['/grafico1']">Ver gráfico</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div *ngIf="step == 5">
+        <h1>test</h1>
+        <div>
+            <canvas id="pieChart" width="400" height="400"></canvas>
+          </div>          
+      </div>
     
 </body>
 <button class="floating-button" [routerLink]="['']"></button>

@@ -5,6 +5,7 @@ import { UsuariosComponent } from 'src/app/usuarios/usuarios.component';
 import { AdminService } from 'src/app/services/admin.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegistroAdminComponent } from 'src/app/usuarios/registro-admin/registro-admin.component';
+import { BaseChartDirective } from 'ng2-charts';
 
 const routes: Routes = [
   {path: '', component: UsuariosComponent, canActivate: [AdminService]},
@@ -17,6 +18,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    BaseChartDirective,
     RouterModule.forChild(routes)
   ],
   schemas:[

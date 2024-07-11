@@ -12,12 +12,14 @@ import { CommonModule } from '@angular/common';
 import { MailActivacionComponent } from './mail-activacion/mail-activacion.component';
 import { AnimationsComponent } from './animations/animations.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PieChartComponent } from './pie-chart/pie-chart.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MailActivacionComponent,
-    AnimationsComponent
+    AnimationsComponent,
+    PieChartComponent
   ],
   imports: [
     CommonModule,
